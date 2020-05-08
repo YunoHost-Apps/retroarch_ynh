@@ -1,0 +1,4 @@
+SOURCE_URL=https://buildbot.libretro.com/assets/frontend/bundle.zip
+SOURCE_SUM=64a8f75a07d13845cc987fded5ae22fae2af00ae140e3e22621f124c136fee14
+SOURCE_FORMAT=zip
+SOURCE_IN_SUBDIR=true

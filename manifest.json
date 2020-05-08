@@ -1,0 +1,55 @@
+{
+    "name": "Retroarch Web Player",
+    "id": "retroarch",
+    "packaging_format": 1,
+    "description": {
+        "en": "Emulate videogames system and play videogames through your web browser... and more!",
+        "fr": "Emulez des consoles de jeux et jouer à ces jeux vidéos dans votre explorateur web... Et beaucoup plus!"
+    },
+    "version": "1.8.6~ynh1",
+    "url": "https://example.com",
+    "license": "free",
+    "maintainer": {
+        "name": "Krakinou",
+        "email": "misterl56@hotmail.com"
+    },
+    "requirements": {
+        "yunohost": ">= 3.7.1"
+    },
+    "multi_instance": false,
+    "services": [
+        "nginx"
+    ],
+    "arguments": {
+        "install" : [
+            {
+                "name": "domain",
+                "type": "domain",
+                "ask": {
+                    "en": "Choose a domain name for RetroArch",
+                    "fr": "Choisissez un nom de domaine pour RetroArch"
+                },
+                "example": "example.com"
+            },
+            {
+                "name": "path",
+                "type": "path",
+                "ask": {
+                    "en": "Choose a path for RetroArch",
+                    "fr": "Choisissez un chemin pour RetroArch"
+                },
+                "example": "/example",
+                "default": "/retroarch"
+            },
+            {
+                "name": "is_public",
+                "type": "boolean",
+                "ask": {
+                    "en": "Is it a public application?",
+                    "fr": "Est-ce une application publique ?"
+                },
+                "default": true
+            }
+        ]
+    }
+}
