@@ -6,8 +6,9 @@
 # IMPORT GENERIC HELPERS
 #=================================================
 
-source _common.sh
 source /usr/share/yunohost/helpers
+source _common.sh
+
 
 #=================================================
 # RETRIEVE ARGUMENTS
@@ -29,10 +30,6 @@ ynh_script_progression --message="Loading installation settings..." --time --wei
 # Needed for helper "ynh_add_nginx_config"
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 
-# Add settings here as needed by your application
-#db_name=$(ynh_app_setting_get --app=$app --key=db_name)
-#db_user=$db_name
-#db_pwd=$(ynh_app_setting_get --app=$app --key=db_pwd)
 
 #=================================================
 # BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
@@ -64,17 +61,9 @@ fi
 change_path=0
 if [ "$old_path" != "$new_path" ]
 then
-	change_path=1
+	ynh_print_warn "RetroArch works only on root path, path cannot be changed!
+	#change_path=1
 fi
-
-#=================================================
-# STANDARD MODIFICATIONS
-#=================================================
-# STOP SYSTEMD SERVICE
-#=================================================
-ynh_script_progression --message="Stopping a systemd service..." --time --weight=1
-
-ynh_systemd_action --service_name=$app --action="stop" --log_path="/var/log/$app/$app.log"
 
 #=================================================
 # MODIFY URL IN NGINX CONF
@@ -96,6 +85,7 @@ then
 fi
 
 # Change the domain for nginx
+#Keep it if, one day, we can change it...
 if [ $change_domain -eq 1 ]
 then
 	# Delete file checksum for the old conf file location
@@ -110,15 +100,6 @@ fi
 #=================================================
 # ...
 #=================================================
-
-#=================================================
-# GENERIC FINALISATION
-#=================================================
-# START SYSTEMD SERVICE
-#=================================================
-ynh_script_progression --message="Starting a systemd service..." --time --weight=1
-
-ynh_systemd_action --service_name=$app --action="start" --log_path="/var/log/$app/$app.log"
 
 #=================================================
 # RELOAD NGINX
