@@ -37,7 +37,7 @@ app=$YNH_APP_INSTANCE_NAME
 #=================================================
 ynh_script_progression --message="Validating installation parameters..." --time --weight=1
 
-final_path=/var/www/$app
+final_path=/opt/yunohost/$app
 test ! -e "$final_path" || ynh_die --message="This path already contains a folder"
 
 # Register (book) web path
@@ -57,11 +57,9 @@ ynh_app_setting_set --app=$app --key=is_public --value=$is_public
 #=================================================
 ynh_script_progression --message="Installing dependencies..." --time --weight=1
 
-#waiting for new version of helpers to be deployed https://github.com/YunoHost/yunohost/blob/stretch-unstable/data/helpers.d/nodejs
 ynh_install_nodejs --nodejs_version=10
 ynh_use_nodejs
 ynh_npm install -g coffeescript
-#npm install -g coffeescript
 
 
 ynh_install_app_dependencies $pkg_dependencies
@@ -75,23 +73,25 @@ ynh_app_setting_set --app=$app --key=final_path --value=$final_path
 # Download, check integrity, uncompress and patch the source from app.src
 # uncompress and patch done manually as 7z format is not supported
 ynh_setup_source --dest_dir="$final_path" --source_id=$app
-7zr e $final_path/retroarch.7z -o$final_path
+#7z archive not handled by ynh and no way to strip component, have to move it manually
+7zr x $final_path/retroarch.7z -o$final_path
+mv $final_path/retroarch/* $final_path/
 rm $final_path/retroarch.7z
+rm -r $final_path/retroarch
 
 #create additionnal folders & file #https://github.com/libretro/RetroArch/tree/master/pkg/emscripten
 mkdir -p $final_path/assets/frontend/bundle
 mkdir -p $final_path/assets/cores
 touch $final_path/analytics.js #https://github.com/libretro/RetroArch/issues/4539#issuecomment-473345195
-mv $final_path/canvas.png $final_path/media/ #do not ask me why this file is not naturally at the correct place
 
 #Get the indexer as exe so that folder w/ ROMs can be indexed
 chmod +x $final_path/indexer
 
 ###install bundle source. As it is change every day (only nightly exists) - ynh_setup_source is useless
 #ynh_setup_source --dest_dir="$final_path/assets/frontend/bundle" --source_id=bundle
-wget -q $(grep 'SOURCE_URL=' "../conf/bundle.src" | cut --delimiter='=' --fields=2-) -O $final_path/assets/frontend/bundle/bundle.zip
-unzip -q $final_path/assets/frontend/bundle/bundle.zip -d $final_path/assets/frontend/bundle/
-rm $final_path/assets/frontend/bundle/bundle.zip
+#wget -q $(grep 'SOURCE_URL=' "../conf/bundle.src" | cut --delimiter='=' --fields=2-) -O $final_path/assets/frontend/bundle/bundle.zip
+#unzip -q $final_path/assets/frontend/bundle/bundle.zip -d $final_path/assets/frontend/bundle/
+#rm $final_path/assets/frontend/bundle/bundle.zip
 
 #=================================================
 # NGINX CONFIGURATION

@@ -28,7 +28,9 @@ ynh_script_progression --message="Removing dependencies..." --time --weight=1
 #ynh_remove_app_dependencies
 #ynh_use_nodejs
 #ynh_npm uninstall -g coffeescript
-npm uninstall -g coffeescript
+ynh_use_nodejs
+ynh_npm uninstall -g coffeescript
+ynh_remove_nodejs
 
 
 #=================================================
@@ -55,27 +57,6 @@ else
 ynh_print_warn "/etc/nginx/mime.types has changed! Keeping current file!"
 fi
 
-#=================================================
-# SPECIFIC REMOVE
-#=================================================
-# REMOVE THE CRON FILE
-#=================================================
-
-# Remove a cron file
-#ynh_secure_remove --file="/etc/cron.d/$app"
-
-# Remove a directory securely
-#ynh_secure_remove --file="/etc/$app/"
-
-#=================================================
-# GENERIC FINALIZATION
-#=================================================
-# REMOVE DEDICATED USER
-#=================================================
-ynh_script_progression --message="Removing the dedicated system user..." --time --weight=1
-
-# Delete a system user
-ynh_system_user_delete --username=$app
 
 #=================================================
 # END OF SCRIPT
