@@ -1,5 +1,4 @@
-##DEVELOPPEMENT EN COURS - NE PAS UTILISER!
-# App exemple pour YunoHost
+# RetroArch Web Player pour YunoHost
 
 [![Niveau d'intégration](https://dash.yunohost.org/integration/retroarch.svg)](https://dash.yunohost.org/appci/app/retroarch)  
 [![Installer retroarch avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.png)](https://install-app.yunohost.org/?app=retroarch)
@@ -10,16 +9,10 @@
 Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour savoir comment l'installer et en profiter.*
 
 ## Vue d'ensemble
-Le Web Player Retroarch utilise RetroArch compilé grace à [Emscripten](http://kripken.github.io/emscripten-site/).RetroArch est le frontend de référence pour l'API libretro.
-Des exemple populaires d'implémentations de cette API incluent des émulateurs de jeux vidéos et de moteur de jeux ainsi que des programmes 3D plus généraux.
-Ces programmes sont instanciés comme bibliothèques dynamiques, appelées "libretro cores".
+RetroArch est un frontend pour des émulateurs, des moteurs de jeux et des lecteurs média.
+Il vous permet de rejouer à des classiques du jeu vidéo sur une large gamme d'ordinateur et de console grace à son interface graphique légère. Les réglages sont unifiés afin de n'avoir a effectuer les réglages qu'une seule fois.
 
-* On ne peut pas sauvegarder. En fait, on ne peut pas écrire dans les fichiers du tout, donc la configuration est perdue à chaque fois
-* Pas de gestion d'utilisateurs
-* certains cores sont listés mais ne sont pas implémentés : ils ne fonctionnent donc pas, le problème vient de l'application elle même.
-* Les jeux sont situés dans `/opt/yunohost/retroarch/assets/cores`. Un lien symbolique est créé vers `/home/yunohost.multimedia/share/Games` de façon à ce que vous puissiez les y mettre facilement.
-* Les cores doivent être indexés pour fonctionner : le script `/opt/yunohost/retroarch/indexer.sh` tourne toutes les 5 minutes pour indexer tous les jeux dans `opt/yunohost/retroarch/assets/cores`
-
+Le Web Player Retroarch utilise RetroArch compilé grace à [Emscripten](http://kripken.github.io/emscripten-site/).
 
 
 **Version incluse:** 1.9.1
@@ -32,21 +25,20 @@ Ces programmes sont instanciés comme bibliothèques dynamiques, appelées "libr
 
 * [Démo officielle](https://web.libretro.com/)
 
-## Configuration
-
-Comment configurer cette application: via le panneau d'administration, un fichier brut en SSH ou tout autre moyen.
 
 ## Documentation
 
- * Documentation officielle: Lien vers la documentation officielle de cette application
- * Documentation YunoHost: Si une documentation spécifique est nécessaire, n'hésitez pas à contribuer.
+ * [Website officiel](https://www.retroarch.com/)
+ * [Documentation officielle du web player](https://github.com/libretro/RetroArch/tree/master/pkg/emscripten) (c'est très très léger...)
+ * [Documentation officielle](https://docs.libretro.com/)
 
 ## Caractéristiques spécifiques YunoHost
 
-#### Support multi-utilisateurs
+#### Bibliothèque partagée
 
-L'authentification LDAP et HTTP est-elle prise en charge?
-L'application peut-elle être utilisée par plusieurs utilisateurs?
+Même si vous pouvez uploader une ROM depuis l'application, RetroArch peut accéder à celle déjà sur votre serveur:
+* Les jeux sont situés dans `/opt/yunohost/retroarch/assets/cores`. Un lien symbolique est créé vers `/home/yunohost.multimedia/share/Games` de façon à ce que vous puissiez les y mettre facilement.
+* Les cores doivent être indexés pour fonctionner : le script `/opt/yunohost/retroarch/indexer.sh` tourne toutes les 5 minutes pour indexer tous les jeux dans `opt/yunohost/retroarch/assets/cores`
 
 #### Architectures supportées
 
@@ -56,20 +48,15 @@ L'application peut-elle être utilisée par plusieurs utilisateurs?
 
 ## Limitations
 
-* Limitations connues.
-
-## Informations additionnelles
-
-* Autres informations à ajouter sur cette application
-
-**Plus d'informations sur la page de documentation:**  
-https://yunohost.org/packaging_apps
+* On ne peut pas sauvegarder. En fait, on ne peut pas écrire dans les fichiers du tout, donc la configuration est perdue à chaque fois...
+* Pas de gestion d'utilisateurs
+* certains cores sont listés mais ne sont pas implémentés : ils ne fonctionnent donc pas, le problème vient de l'application elle même.
 
 ## Liens
 
  * Signaler un bug: https://github.com/YunoHost-Apps/retroarch_ynh/issues
- * Site de l'application: Lien vers le site officiel de cette application
- * Dépôt de l'application principale: Lien vers le dépôt officiel de l'application principale
+ * Site de l'application: [Official Website](https://www.retroarch.com/)
+ * Dépôt de l'application principale: https://github.com/libretro/RetroArch/tree/master/pkg/emscripten
  * Site web YunoHost: https://yunohost.org/
 
 ---
