@@ -87,6 +87,8 @@ ynh_script_progression --message="Setting up Multimedia directory..." --weight=9
 ynh_multimedia_build_main_dir
 mkdir -p $final_path/assets/cores/Game
 ynh_multimedia_addfolder --source_dir="$final_path/assets/cores/Game" --dest_dir="/share/Game"
+ynh_add_config --template="../conf/README.GAME" --destination="$final_path/assets/cores/Game/README"
+chmod 666 $final_path/assets/cores/Game/README
 
 # SETUP CRON FILE FOR INDEXER
 
