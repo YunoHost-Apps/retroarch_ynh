@@ -31,7 +31,13 @@ ynh_script_progression --message="Removing dependencies..." --time --weight=1
 ynh_use_nodejs
 ynh_npm uninstall -g coffeescript
 ynh_remove_nodejs
+ynh_remove_app_dependencies
 
+#=================================================
+# REMOVE CRONJOB
+#=================================================
+
+ynh_secure_remove --file="/etc/cron.d/$app
 
 #=================================================
 # REMOVE APP MAIN DIR

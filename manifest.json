@@ -8,7 +8,7 @@
     },
     "version": "1.9.1~ynh1",
     "url": "http://www.retroarch.com/",
-    "license": "free",
+    "license": "GPL-3.0-or-later",
     "maintainer": {
         "name": "Krakinou",
         "email": "misterl56@hotmail.com"
@@ -25,19 +25,15 @@
             {
                 "name": "domain",
                 "type": "domain",
-                "ask": {
-                    "en": "Choose a domain name for RetroArch (RetroArch requires its own domain)",
-                    "fr": "Choisissez un nom de domaine pour RetroArch (RetroArch nécessite son propre domaine)"
+                "help": {
+                    "en": "RetroArch requires its own subdomain",
+                    "fr": "RetroArch nécessite son propre sous-domaine"
                 },
                 "example": "retroarch.example.com"
             },
             {
                 "name": "is_public",
                 "type": "boolean",
-                "ask": {
-                    "en": "Is it a public application?",
-                    "fr": "Est-ce une application publique ?"
-                },
                 "default": true,
                 "help":{
                 	"en":"Yes will allow everyone to access the app without login to yunohost instance first",

@@ -25,11 +25,8 @@ ynh_abort_if_errors
 #=================================================
 
 domain=$YNH_APP_ARG_DOMAIN
-#path_url=$YNH_APP_ARG_PATH
 path_url="/"
-#admin=$YNH_APP_ARG_ADMIN
 is_public=$YNH_APP_ARG_IS_PUBLIC
-#language=$YNH_APP_ARG_LANGUAGE
 app=$YNH_APP_INSTANCE_NAME
 
 #=================================================
@@ -50,7 +47,6 @@ ynh_script_progression --message="Storing installation settings..." --weight=1
 
 ynh_app_setting_set --app=$app --key=domain --value=$domain
 ynh_app_setting_set --app=$app --key=path --value=$path_url
-ynh_app_setting_set --app=$app --key=is_public --value=$is_public
 
 #=================================================
 # INSTALL DEPENDENCIES
@@ -75,12 +71,9 @@ ynh_setup_source --dest_dir="$final_path" --source_id=$app
 #7z archive not handled by ynh and no way to strip component, have to move it manually
 7zr x $final_path/retroarch.7z -o$final_path
 mv $final_path/retroarch/* $final_path/
-rm $final_path/retroarch.7z
-rm -r $final_path/retroarch
+ynh_secure_remove --file="$final_path/retroarch.7z"
+ynh_secure_remove --file="$final_path/retroarch"
 
-#create additionnal folders & file #https://github.com/libretro/RetroArch/tree/master/pkg/emscripten
-#mkdir -p $final_path/assets/frontend/bundle
-#mkdir -p $final_path/assets/cores
 touch $final_path/analytics.js #https://github.com/libretro/RetroArch/issues/4539#issuecomment-473345195
 
 #Get the indexer as exe so that folder w/ ROMs can be indexed
