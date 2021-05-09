@@ -11,13 +11,21 @@
 If you don't have YunoHost, please see [here](https://yunohost.org/#/install) to know how to install and enjoy it.*
 
 ## Overview
-Quick description of this app.
+The RetroArch Web Player is RetroArch compiled through [Emscripten](http://kripken.github.io/emscripten-site/). RetroArch is the reference frontend for the libretro API.
+Popular examples of implementations for this API includes video game system emulators and game engines as well as more generalized 3D programs.
+These programs are instantiated as dynamic libraries. We refer to these as "libretro cores". In our case, these cores are emulators
+
+* cannot save game, in fact, cannot write at all... so configuration is lost each time you start again
+* no user management
+* some core are listed but not implemented : they do not work, the issue is from the upstream app.
+* Games are located in `/opt/yunohost/retroarch/assets/cores`. A symbolic link is created to this folder in `/home/yunohost.multimedia/share/Games`, so that you can place your games from here
+* cores have to be indexed to work : script `/opt/yunohost/retroarch/indexer.sh` run every 10 minutes to index all games in `opt/yunohost/retroarch/assets/cores`
 
 **Shipped version:** 1.9.1
 
 ## Screenshots
 
-![](Link to an screenshot for this app)
+![](https://github.com/libretro/RetroArch/blob/master/docs/ozone-main-menu.jpg)
 
 ## Demo
 
@@ -47,6 +55,8 @@ Can the app be used by multiple users?
 ## Limitations
 
 * Any known limitations.
+
+
 
 ## Additional information
 
