@@ -12,13 +12,12 @@ source /usr/share/yunohost/helpers
 #=================================================
 # LOAD SETTINGS
 #=================================================
-ynh_script_progression --message="Loading installation settings..." --time --weight=1
+ynh_script_progression --message="Loading installation settings..." --weight=1
 
 app=$YNH_APP_INSTANCE_NAME
 
 domain=$(ynh_app_setting_get --app=$app --key=domain)
 path_url=$(ynh_app_setting_get --app=$app --key=path)
-is_public=$(ynh_app_setting_get --app=$app --key=is_public)
 final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 
 #=================================================
@@ -34,127 +33,99 @@ final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 upgrade_type=$(ynh_check_app_version_changed)
 
 #=================================================
-# ENSURE DOWNWARD COMPATIBILITY
-#=================================================
-ynh_script_progression --message="Ensuring downward compatibility..." --time --weight=1
-
-# Fix is_public as a boolean value
-if [ "$is_public" = "Yes" ]; then
-	ynh_app_setting_set --app=$app --key=is_public --value=1
-	is_public=1
-elif [ "$is_public" = "No" ]; then
-	ynh_app_setting_set --app=$app --key=is_public --value=0
-	is_public=0
-fi
-
-# If final_path doesn't exist, create it
-if [ -z "$final_path" ]; then
-	final_path=/var/www/$app
-	ynh_app_setting_set --app=$app --key=final_path --value=$final_path
-fi
-
-#=================================================
 # BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
 #=================================================
-ynh_script_progression --message="Backing up the app before upgrading (may take a while)..." --time --weight=1
+ynh_script_progression --message="Backing up the app before upgrading (may take a while)..." --weight=10
 
 # Backup the current version of the app
 ynh_backup_before_upgrade
 ynh_clean_setup () {
-	# restore it if the upgrade fails
+	# Restore it if the upgrade fails
 	ynh_restore_upgradebackup
 }
 # Exit if an error occurs during the execution of the script
 ynh_abort_if_errors
 
 #=================================================
-# CHECK THE PATH
-#=================================================
-
-# Normalize the URL path syntax
-# N.B. : this is for app installations before YunoHost 2.7
-# where this value might be something like /foo/ or foo/
-# instead of /foo ....
-# If nobody installed your app before 2.7, then you may
-# safely remove this line
-path_url=$(ynh_normalize_url_path --path_url=$path_url)
-
+# STANDARD UPGRADE STEPS
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 
 if [ "$upgrade_type" == "UPGRADE_APP" ]
 then
-	ynh_script_progression --message="Upgrading source files..." --time --weight=1
+	ynh_script_progression --message="Upgrading source files..." --weight=5
 
 	# Download, check integrity, uncompress and patch the source from app.src
 	ynh_setup_source --dest_dir="$final_path" --source_id=$app
-	7zr e $final_path/retroarch.7z -o$final_path
-	rm $final_path/retroarch.7z
+	#7z archive not handled by ynh and no way to strip component, have to move it manually
+	7zr x $final_path/retroarch.7z -o$final_path
+	#mv not working as target directory is not empty
+	cp -R $final_path/retroarch/* $final_path/
+	ynh_secure_remove --file="$final_path/retroarch.7z"
+	ynh_secure_remove --file="$final_path/retroarch"
+	touch $final_path/analytics.js #https://github.com/libretro/RetroArch/issues/4539#issuecomment-473345195
+	#Get the indexer as exe so that folder w/ ROMs can be indexed
+	chmod +x $final_path/indexer
 fi
+
+# SETUP CRON FILE FOR INDEXER
+
+#setup indexer bash script
+ynh_add_config --template="../conf/indexer.sh" --destination="$final_path/indexer.sh"
+chown root: $final_path/indexer.sh
+chmod 744 $final_path/indexer.sh
+#setup cron file
+cron_path="/etc/cron.d/$app"
+ynh_add_config --template="../conf/retroarch.cron" --destination="$cron_path"
+chown root: "$cron_path"
+chmod 644 "$cron_path"
+
+#=================================================
+#SETTING MULTIMEDIA DIRECTORY
+#=================================================
+ynh_script_progression --message="Setting up Multimedia directory..." --weight=4
+
+ynh_multimedia_build_main_dir
+mkdir -p $final_path/assets/cores/Game
+ynh_multimedia_addfolder --source_dir="$final_path/assets/cores/Game" --dest_dir="/share/Game"
+ynh_add_config --template="../conf/README.GAME" --destination="$final_path/assets/cores/Game/README"
+chmod 666 $final_path/assets/cores/Game/README
 
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
-ynh_script_progression --message="Upgrading nginx web server configuration..." --time --weight=1
+ynh_script_progression --message="Upgrading NGINX web server configuration..." --weight=1
 
-# Create a dedicated nginx config
+# Create a dedicated NGINX config
 ynh_add_nginx_config
 
 #=================================================
 # UPGRADE DEPENDENCIES
 #=================================================
-ynh_script_progression --message="Upgrading dependencies..." --time --weight=1
+ynh_script_progression --message="Upgrading dependencies..." --weight=20
 
+# Define and install dependencies
+#Dependencies are not really required as this is just to unzip the 7z file
 ynh_install_app_dependencies $pkg_dependencies
-
-#=================================================
-# CREATE DEDICATED USER
-#=================================================
-ynh_script_progression --message="Making sure dedicated system user exists..." --time --weight=1
-
-# Create a dedicated user (if not existing)
-ynh_system_user_create --username=$app
+#However, npm IS required to run the coffeescript
+ynh_install_nodejs --nodejs_version=10
+ynh_use_nodejs
+ynh_npm install -g coffeescript
 
 #=================================================
 # SPECIFIC UPGRADE
 #=================================================
-# ...
-#=================================================
-
-#=================================================
-# STORE THE CONFIG FILE CHECKSUM
-#=================================================
-
-### Verify the checksum of a file, stored by `ynh_store_file_checksum` in the install script.
-### And create a backup of this file if the checksum is different. So the file will be backed up if the admin had modified it.
-#ynh_backup_if_checksum_is_different --file="$final_path/CONFIG_FILE"
-# Recalculate and store the checksum of the file for the next upgrade.
-#ynh_store_file_checksum --file="$final_path/CONFIG_FILE"
-
-#=================================================
-# SECURE FILES AND DIRECTORIES
-#=================================================
-
 # Set permissions on app files
+#=================================================
+# 
 chown -R root: $final_path
 
-#=================================================
-# SETUP SSOWAT
-#=================================================
-ynh_script_progression --message="Upgrading SSOwat configuration..." --time --weight=1
-
-# Make app public if necessary
-if [ $is_public -eq 1 ]
-then
-	# unprotected_uris allows SSO credentials to be passed anyway
-	ynh_app_setting_set --app=$app --key=unprotected_uris --value="/"
-fi
 
 #=================================================
 # RELOAD NGINX
 #=================================================
-ynh_script_progression --message="Reloading nginx web server..." --time --weight=1
+ynh_script_progression --message="Reloading NGINX web server..." --weight=1
 
 ynh_systemd_action --service_name=nginx --action=reload
 
@@ -162,4 +133,4 @@ ynh_systemd_action --service_name=nginx --action=reload
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Upgrade of $app completed" --time --last
+ynh_script_progression --message="Upgrade of $app completed" --last

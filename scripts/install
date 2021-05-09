@@ -25,11 +25,8 @@ ynh_abort_if_errors
 #=================================================
 
 domain=$YNH_APP_ARG_DOMAIN
-#path_url=$YNH_APP_ARG_PATH
 path_url="/"
-#admin=$YNH_APP_ARG_ADMIN
 is_public=$YNH_APP_ARG_IS_PUBLIC
-#language=$YNH_APP_ARG_LANGUAGE
 app=$YNH_APP_INSTANCE_NAME
 
 #=================================================
@@ -50,7 +47,6 @@ ynh_script_progression --message="Storing installation settings..." --weight=1
 
 ynh_app_setting_set --app=$app --key=domain --value=$domain
 ynh_app_setting_set --app=$app --key=path --value=$path_url
-ynh_app_setting_set --app=$app --key=is_public --value=$is_public
 
 #=================================================
 # INSTALL DEPENDENCIES
@@ -60,7 +56,6 @@ ynh_script_progression --message="Installing dependencies..." --weight=13
 ynh_install_nodejs --nodejs_version=10
 ynh_use_nodejs
 ynh_npm install -g coffeescript
-
 
 ynh_install_app_dependencies $pkg_dependencies
 
@@ -76,16 +71,36 @@ ynh_setup_source --dest_dir="$final_path" --source_id=$app
 #7z archive not handled by ynh and no way to strip component, have to move it manually
 7zr x $final_path/retroarch.7z -o$final_path
 mv $final_path/retroarch/* $final_path/
-rm $final_path/retroarch.7z
-rm -r $final_path/retroarch
+ynh_secure_remove --file="$final_path/retroarch.7z"
+ynh_secure_remove --file="$final_path/retroarch"
 
-#create additionnal folders & file #https://github.com/libretro/RetroArch/tree/master/pkg/emscripten
-mkdir -p $final_path/assets/frontend/bundle
-mkdir -p $final_path/assets/cores
 touch $final_path/analytics.js #https://github.com/libretro/RetroArch/issues/4539#issuecomment-473345195
 
 #Get the indexer as exe so that folder w/ ROMs can be indexed
 chmod +x $final_path/indexer
+
+#=================================================
+#SETTING MULTIMEDIA DIRECTORY
+#=================================================
+ynh_script_progression --message="Setting up Multimedia directory..." --weight=9
+
+ynh_multimedia_build_main_dir
+mkdir -p $final_path/assets/cores/Game
+ynh_multimedia_addfolder --source_dir="$final_path/assets/cores/Game" --dest_dir="/share/Game"
+ynh_add_config --template="../conf/README.GAME" --destination="$final_path/assets/cores/Game/README"
+chmod 666 $final_path/assets/cores/Game/README
+
+# SETUP CRON FILE FOR INDEXER
+
+#setup indexer bash script
+ynh_add_config --template="../conf/indexer.sh" --destination="$final_path/indexer.sh"
+chown root: $final_path/indexer.sh
+chmod 744 $final_path/indexer.sh
+#setup cron file
+cron_path="/etc/cron.d/$app"
+ynh_add_config --template="../conf/retroarch.cron" --destination="$cron_path"
+chown root: "$cron_path"
+chmod 644 "$cron_path"
 
 #=================================================
 # NGINX CONFIGURATION
@@ -112,18 +127,6 @@ ynh_add_nginx_config
 chown -R root: $final_path
 
 #=================================================
-# SETUP INDEX
-#=================================================
-#indexer use the current directory to run #https://github.com/libretro/RetroArch/tree/master/pkg/emscripten
-#Indexer will list the available ROM and cores for Retroarch
-ynh_script_progression --message="Setup Indexer for content..." --weight=3
-
-cd $final_path/assets/frontend/bundle/
-../../../indexer > .index-xhr
-cd $final_path/assets/cores
-../../indexer > .index-xhr
-
-#=================================================
 # SETUP SSOWAT
 #=================================================
 ynh_script_progression --message="Configuring SSOwat..." --weight=1
@@ -135,12 +138,24 @@ then
 fi
 
 #=================================================
+# SETUP INDEX
+#=================================================
+#indexer use the current directory to run #https://github.com/libretro/RetroArch/tree/master/pkg/emscripten,
+# so we have to cd in it to use it correctly => last step of the install so to not mess with other commands relative path
+#Indexer will list the available ROM and cores for Retroarch
+ynh_script_progression --message="Setup Indexer for content..." --weight=3
+
+cd $final_path/assets/frontend/bundle/
+../../../indexer > .index-xhr
+cd $final_path/assets/cores
+../../indexer > .index-xhr
+
+#=================================================
 # RELOAD NGINX
 #=================================================
 ynh_script_progression --message="Reloading nginx web server..." --weight=1
 
 ynh_systemd_action --service_name=nginx --action=reload
-
 
 
 #=================================================

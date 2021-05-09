@@ -1,64 +1,62 @@
-# App exemple pour YunoHost
+# RetroArch Web Player pour YunoHost
 
-[![Niveau d'intégration](https://dash.yunohost.org/integration/REPLACEBYYOURAPP.svg)](https://dash.yunohost.org/appci/app/REPLACEBYYOURAPP)  
-[![Installer REPLACEBYYOURAPP avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.png)](https://install-app.yunohost.org/?app=REPLACEBYYOURAPP)
+[![Niveau d'intégration](https://dash.yunohost.org/integration/retroarch.svg)](https://dash.yunohost.org/appci/app/retroarch)  
+[![Installer retroarch avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.png)](https://install-app.yunohost.org/?app=retroarch)
 
 *[Read this readme in english.](./README.md)* 
 
-> *Ce package vous permet d'installer REPLACEBYYOURAPP rapidement et simplement sur un serveur Yunohost.  
+> *Ce package vous permet d'installer retroarch rapidement et simplement sur un serveur Yunohost.  
 Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour savoir comment l'installer et en profiter.*
 
 ## Vue d'ensemble
-Description rapide de cette application.
+RetroArch est un frontend pour des émulateurs, des moteurs de jeux et des lecteurs média.
+Il vous permet de rejouer à des classiques du jeu vidéo sur une large gamme d'ordinateur et de console grace à son interface graphique légère. Les réglages sont unifiés afin de n'avoir a effectuer les réglages qu'une seule fois.
 
-**Version incluse:** 1.0
+Le Web Player Retroarch utilise RetroArch compilé grace à [Emscripten](http://kripken.github.io/emscripten-site/).
+
+
+**Version incluse:** 1.9.1
 
 ## Captures d'écran
 
-![](Lien vers une capture d'écran pour cette application)
+![](https://github.com/libretro/RetroArch/blob/master/docs/ozone-main-menu.jpg)
 
 ## Démo
 
-* [Démo officielle](Lien vers un site de démonstration pour cette application)
+* [Démo officielle](https://web.libretro.com/)
 
-## Configuration
-
-Comment configurer cette application: via le panneau d'administration, un fichier brut en SSH ou tout autre moyen.
 
 ## Documentation
 
- * Documentation officielle: Lien vers la documentation officielle de cette application
- * Documentation YunoHost: Si une documentation spécifique est nécessaire, n'hésitez pas à contribuer.
+ * [Website officiel](https://www.retroarch.com/)
+ * [Documentation officielle du web player](https://github.com/libretro/RetroArch/tree/master/pkg/emscripten) (c'est très très léger...)
+ * [Documentation officielle](https://docs.libretro.com/)
 
 ## Caractéristiques spécifiques YunoHost
 
-#### Support multi-utilisateurs
+#### Bibliothèque partagée
 
-L'authentification LDAP et HTTP est-elle prise en charge?
-L'application peut-elle être utilisée par plusieurs utilisateurs?
+Même si vous pouvez uploader une ROM depuis l'application, RetroArch peut accéder à celle déjà sur votre serveur:
+* Les jeux sont situés dans `/opt/yunohost/retroarch/assets/cores`. Un lien symbolique est créé vers `/home/yunohost.multimedia/share/Games` de façon à ce que vous puissiez les y mettre facilement.
+* Les cores doivent être indexés pour fonctionner : le script `/opt/yunohost/retroarch/indexer.sh` tourne toutes les 5 minutes pour indexer tous les jeux dans `opt/yunohost/retroarch/assets/cores`
 
 #### Architectures supportées
 
-* x86-64b - [![Build Status](https://ci-apps.yunohost.org/ci/logs/REPLACEBYYOURAPP%20%28Apps%29.svg)](https://ci-apps.yunohost.org/ci/apps/REPLACEBYYOURAPP/)
-* ARMv8-A - [![Build Status](https://ci-apps-arm.yunohost.org/ci/logs/REPLACEBYYOURAPP%20%28Apps%29.svg)](https://ci-apps-arm.yunohost.org/ci/apps/REPLACEBYYOURAPP/)
-* Jessie x86-64b - [![Build Status](https://ci-stretch.nohost.me/ci/logs/REPLACEBYYOURAPP%20%28Apps%29.svg)](https://ci-stretch.nohost.me/ci/apps/REPLACEBYYOURAPP/)
+* x86-64b - [![Build Status](https://ci-apps.yunohost.org/ci/logs/retroarch%20%28Apps%29.svg)](https://ci-apps.yunohost.org/ci/apps/retroarch/)
+* ARMv8-A - [![Build Status](https://ci-apps-arm.yunohost.org/ci/logs/retroarch%20%28Apps%29.svg)](https://ci-apps-arm.yunohost.org/ci/apps/retroarch/)
+* Jessie x86-64b - [![Build Status](https://ci-stretch.nohost.me/ci/logs/retroarch%20%28Apps%29.svg)](https://ci-stretch.nohost.me/ci/apps/retroarch/)
 
 ## Limitations
 
-* Limitations connues.
-
-## Informations additionnelles
-
-* Autres informations à ajouter sur cette application
-
-**Plus d'informations sur la page de documentation:**  
-https://yunohost.org/packaging_apps
+* On ne peut pas sauvegarder. En fait, on ne peut pas écrire dans les fichiers du tout, donc la configuration est perdue à chaque fois...
+* Pas de gestion d'utilisateurs
+* certains cores sont listés mais ne sont pas implémentés : ils ne fonctionnent donc pas, le problème vient de l'application elle même.
 
 ## Liens
 
- * Signaler un bug: https://github.com/YunoHost-Apps/REPLACEBYYOURAPP_ynh/issues
- * Site de l'application: Lien vers le site officiel de cette application
- * Dépôt de l'application principale: Lien vers le dépôt officiel de l'application principale
+ * Signaler un bug: https://github.com/YunoHost-Apps/retroarch_ynh/issues
+ * Site de l'application: [Official Website](https://www.retroarch.com/)
+ * Dépôt de l'application principale: https://github.com/libretro/RetroArch/tree/master/pkg/emscripten
  * Site web YunoHost: https://yunohost.org/
 
 ---
@@ -67,11 +65,11 @@ Informations pour les développeurs
 ----------------
 
 **Seulement si vous voulez utiliser une branche de test pour le codage, au lieu de fusionner directement dans la banche principale.**
-Merci de faire vos pull request sur la [branche testing](https://github.com/YunoHost-Apps/REPLACEBYYOURAPP_ynh/tree/testing).
+Merci de faire vos pull request sur la [branche testing](https://github.com/YunoHost-Apps/retroarch_ynh/tree/testing).
 
 Pour essayer la branche testing, procédez comme suit.
 ```
-sudo yunohost app install https://github.com/YunoHost-Apps/REPLACEBYYOURAPP_ynh/tree/testing --debug
+sudo yunohost app install https://github.com/YunoHost-Apps/retroarch_ynh/tree/testing --debug
 ou
-sudo yunohost app upgrade REPLACEBYYOURAPP -u https://github.com/YunoHost-Apps/REPLACEBYYOURAPP_ynh/tree/testing --debug
+sudo yunohost app upgrade retroarch -u https://github.com/YunoHost-Apps/retroarch_ynh/tree/testing --debug
 ```
