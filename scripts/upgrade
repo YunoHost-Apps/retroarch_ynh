@@ -60,6 +60,8 @@ then
 	ynh_setup_source --dest_dir="$final_path" --source_id=$app
 	#7z archive not handled by ynh and no way to strip component, have to move it manually
 	7zr x $final_path/retroarch.7z -o$final_path
+	#mv not working as target directory is not empty
+	cp -R $final_path/retroarch/* $final_path/
 	mv $final_path/retroarch/* $final_path/
 	ynh_secure_remove --file="$final_path/retroarch.7z"
 	ynh_secure_remove --file="$final_path/retroarch"
@@ -86,7 +88,8 @@ chmod 644 "$cron_path"
 ynh_script_progression --message="Setting up Multimedia directory..." --weight=9
 
 ynh_multimedia_build_main_dir
-ynh_multimedia_addfolder --source_dir="$final_path/assets/cores" --dest_dir="/share/Game"
+mkdir -p $final_path/assets/cores/Game
+ynh_multimedia_addfolder --source_dir="$final_path/assets/cores/Game" --dest_dir="/share/Game"
 
 #=================================================
 # NGINX CONFIGURATION
