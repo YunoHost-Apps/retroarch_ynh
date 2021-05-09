@@ -12,7 +12,7 @@ source /usr/share/yunohost/helpers
 #=================================================
 # LOAD SETTINGS
 #=================================================
-ynh_script_progression --message="Loading installation settings..." --time --weight=1
+ynh_script_progression --message="Loading installation settings..." --weight=1
 
 app=$YNH_APP_INSTANCE_NAME
 
@@ -35,7 +35,7 @@ upgrade_type=$(ynh_check_app_version_changed)
 #=================================================
 # BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
 #=================================================
-ynh_script_progression --message="Backing up the app before upgrading (may take a while)..." --time --weight=1
+ynh_script_progression --message="Backing up the app before upgrading (may take a while)..." --weight=10
 
 # Backup the current version of the app
 ynh_backup_before_upgrade
@@ -54,7 +54,7 @@ ynh_abort_if_errors
 
 if [ "$upgrade_type" == "UPGRADE_APP" ]
 then
-	ynh_script_progression --message="Upgrading source files..." --time --weight=1
+	ynh_script_progression --message="Upgrading source files..." --weight=5
 
 	# Download, check integrity, uncompress and patch the source from app.src
 	ynh_setup_source --dest_dir="$final_path" --source_id=$app
@@ -84,7 +84,7 @@ chmod 644 "$cron_path"
 #=================================================
 #SETTING MULTIMEDIA DIRECTORY
 #=================================================
-ynh_script_progression --message="Setting up Multimedia directory..." --weight=9
+ynh_script_progression --message="Setting up Multimedia directory..." --weight=4
 
 ynh_multimedia_build_main_dir
 mkdir -p $final_path/assets/cores/Game
@@ -95,7 +95,7 @@ chmod 666 $final_path/assets/cores/Game/README
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
-ynh_script_progression --message="Upgrading NGINX web server configuration..." --time --weight=1
+ynh_script_progression --message="Upgrading NGINX web server configuration..." --weight=1
 
 # Create a dedicated NGINX config
 ynh_add_nginx_config
@@ -103,7 +103,7 @@ ynh_add_nginx_config
 #=================================================
 # UPGRADE DEPENDENCIES
 #=================================================
-ynh_script_progression --message="Upgrading dependencies..." --time --weight=1
+ynh_script_progression --message="Upgrading dependencies..." --weight=20
 
 # Define and install dependencies
 #Dependencies are not really required as this is just to unzip the 7z file
@@ -125,7 +125,7 @@ chown -R root: $final_path
 #=================================================
 # RELOAD NGINX
 #=================================================
-ynh_script_progression --message="Reloading NGINX web server..." --time --weight=1
+ynh_script_progression --message="Reloading NGINX web server..." --weight=1
 
 ynh_systemd_action --service_name=nginx --action=reload
 
@@ -133,4 +133,4 @@ ynh_systemd_action --service_name=nginx --action=reload
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Upgrade of $app completed" --time --last
+ynh_script_progression --message="Upgrade of $app completed" --last
