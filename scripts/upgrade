@@ -108,19 +108,22 @@ ynh_script_progression --message="Upgrading dependencies..." --time --weight=1
 
 ynh_install_app_dependencies $pkg_dependencies
 
-#=================================================
-# CREATE DEDICATED USER
-#=================================================
-ynh_script_progression --message="Making sure dedicated system user exists..." --time --weight=1
-
-# Create a dedicated user (if not existing)
-ynh_system_user_create --username=$app
 
 #=================================================
 # SPECIFIC UPGRADE
 #=================================================
 # ...
 #=================================================
+
+
+#=================================================
+#SETTING MULTIMEDIA DIRECTORY
+#=================================================
+ynh_script_progression --message="Setting up Multimedia directory..." --weight=9
+
+ynh_multimedia_build_main_dir
+ynh_multimedia_addfolder --source_dir="$final_path/assets/cores" --dest_dir="/Game"
+
 
 #=================================================
 # STORE THE CONFIG FILE CHECKSUM

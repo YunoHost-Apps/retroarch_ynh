@@ -68,14 +68,6 @@ ynh_script_progression --message="Restoring the app main directory..." --time --
 ynh_restore_file --origin_path="$final_path"
 
 #=================================================
-# RECREATE THE DEDICATED USER
-#=================================================
-ynh_script_progression --message="Recreating the dedicated system user..." --time --weight=1
-
-# Create the dedicated user (if not existing)
-ynh_system_user_create --username=$app
-
-#=================================================
 # RESTORE USER RIGHTS
 #=================================================
 
@@ -97,7 +89,18 @@ ynh_script_progression --message="Reinstalling dependencies..." --time --weight=
 #ynh_install_nodejs --nodejs_version=14
 #ynh_use_nodejs
 #ynh_npm install -g coffeescript
-npm install -g coffeescript
+ynh_use_nodejs
+ynh_npm install -g coffeescript
+
+
+#=================================================
+#SETTING MULTIMEDIA DIRECTORY
+#=================================================
+ynh_script_progression --message="Setting up Multimedia directory..." --weight=9
+
+ynh_multimedia_build_main_dir
+ynh_multimedia_addfolder --source_dir="$final_path/assets/cores" --dest_dir="/Game"
+
 
 #=================================================
 # RESTORE THE CRON FILE

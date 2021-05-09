@@ -19,7 +19,7 @@ These programs are instantiated as dynamic libraries. We refer to these as "libr
 * no user management
 * some core are listed but not implemented : they do not work, the issue is from the upstream app.
 * Games are located in `/opt/yunohost/retroarch/assets/cores`. A symbolic link is created to this folder in `/home/yunohost.multimedia/share/Games`, so that you can place your games from here
-* cores have to be indexed to work : script `/opt/yunohost/retroarch/indexer.sh` run every 10 minutes to index all games in `opt/yunohost/retroarch/assets/cores`
+* cores have to be indexed to work : script `/opt/yunohost/retroarch/indexer.sh` run every 5 minutes to index all games in `opt/yunohost/retroarch/assets/cores`
 
 **Shipped version:** 1.9.1
 
