@@ -61,7 +61,7 @@ fi
 change_path=0
 if [ "$old_path" != "$new_path" ]
 then
-	ynh_print_warn "RetroArch works only on root path, path cannot be changed!
+	ynh_print_warn "RetroArch works only on www-data path, path cannot be changed!
 	#change_path=1
 fi
 

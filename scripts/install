@@ -94,12 +94,12 @@ chmod 666 $final_path/assets/cores/Game/README
 
 #setup indexer bash script
 ynh_add_config --template="../conf/indexer.sh" --destination="$final_path/indexer.sh"
-chown root: $final_path/indexer.sh
+chown www-data: $final_path/indexer.sh
 chmod 744 $final_path/indexer.sh
 #setup cron file
 cron_path="/etc/cron.d/$app"
 ynh_add_config --template="../conf/retroarch.cron" --destination="$cron_path"
-chown root: "$cron_path"
+chown www-data: "$cron_path"
 chmod 644 "$cron_path"
 
 #=================================================
@@ -119,12 +119,12 @@ fi
 # Create a dedicated nginx config
 ynh_add_nginx_config
 
-### For security reason, any app should set the permissions to root: before anything else.
+### For security reason, any app should set the permissions to www-data: before anything else.
 ### Then, if write authorization is needed, any access should be given only to directories
 ### that really need such authorization.
 
 # Set permissions to app files
-chown -R root: $final_path
+chown -R www-data: $final_path
 
 #=================================================
 # SETUP SSOWAT
