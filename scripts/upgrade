@@ -73,12 +73,12 @@ fi
 
 #setup indexer bash script
 ynh_add_config --template="../conf/indexer.sh" --destination="$final_path/indexer.sh"
-chown root: $final_path/indexer.sh
+chown www-data: $final_path/indexer.sh
 chmod 744 $final_path/indexer.sh
 #setup cron file
 cron_path="/etc/cron.d/$app"
 ynh_add_config --template="../conf/retroarch.cron" --destination="$cron_path"
-chown root: "$cron_path"
+chown www-data: "$cron_path"
 chmod 644 "$cron_path"
 
 #=================================================
@@ -119,7 +119,7 @@ ynh_npm install -g coffeescript
 # Set permissions on app files
 #=================================================
 # 
-chown -R root: $final_path
+chown -R www-data: $final_path
 
 
 #=================================================
