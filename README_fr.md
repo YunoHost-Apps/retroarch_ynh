@@ -15,7 +15,7 @@ Il vous permet de rejouer à des classiques du jeu vidéo sur une large gamme d'
 Le Web Player Retroarch utilise RetroArch compilé grace à [Emscripten](http://kripken.github.io/emscripten-site/).
 
 
-**Version incluse:** 1.9.1
+**Version incluse:** 1.9.2
 
 ## Captures d'écran
 
