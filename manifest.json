@@ -25,11 +25,13 @@
             {
                 "name": "domain",
                 "type": "domain",
-                "help": {
-                    "en": "RetroArch requires its own subdomain",
-                    "fr": "RetroArch nécessite son propre sous-domaine"
-                },
                 "example": "retroarch.example.com"
+            },
+            {
+                "name": "path",
+                "type": "path",
+                "example": "/retroarch",
+                "default": "/retroarch"
             },
             {
                 "name": "is_public",
