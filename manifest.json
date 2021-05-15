@@ -6,7 +6,7 @@
         "en": "Emulate videogames system and play videogames through your web browser... and more!",
         "fr": "Emulez des consoles de jeux et jouer à ces jeux vidéos dans votre explorateur web... Et beaucoup plus!"
     },
-    "version": "1.9.2~ynh1",
+    "version": "1.9.2~ynh2",
     "url": "http://www.retroarch.com/",
     "license": "GPL-3.0-or-later",
     "maintainer": {
@@ -25,11 +25,13 @@
             {
                 "name": "domain",
                 "type": "domain",
-                "help": {
-                    "en": "RetroArch requires its own subdomain",
-                    "fr": "RetroArch nécessite son propre sous-domaine"
-                },
                 "example": "retroarch.example.com"
+            },
+            {
+                "name": "path",
+                "type": "path",
+                "example": "/retroarch",
+                "default": "/retroarch"
             },
             {
                 "name": "is_public",
