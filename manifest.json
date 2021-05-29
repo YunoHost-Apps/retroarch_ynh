@@ -6,7 +6,7 @@
         "en": "Emulate videogames system and play videogames through your web browser... and more!",
         "fr": "Emulez des consoles de jeux et jouer à ces jeux vidéos dans votre explorateur web... Et beaucoup plus!"
     },
-    "version": "1.9.2~ynh2",
+    "version": "1.9.4~ynh1",
     "url": "http://www.retroarch.com/",
     "license": "GPL-3.0-or-later",
     "maintainer": {
