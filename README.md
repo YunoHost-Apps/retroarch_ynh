@@ -14,7 +14,7 @@ It enables you to run classic games on a wide range of computers and consoles th
 
 The RetroArch Web Player is RetroArch compiled through [Emscripten](http://kripken.github.io/emscripten-site/).
 
-**Shipped version:** 1.9.2
+**Shipped version:** 1.9.4
 
 ## Screenshots
 
