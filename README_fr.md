@@ -1,70 +1,59 @@
-# RetroArch Web Player pour YunoHost
+# Retroarch Web Player pour YunoHost
 
-[![Niveau d'intégration](https://dash.yunohost.org/integration/retroarch.svg)](https://dash.yunohost.org/appci/app/retroarch)  
-[![Installer retroarch avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.png)](https://install-app.yunohost.org/?app=retroarch)
+[![Niveau d'intégration](https://dash.yunohost.org/integration/retroarch.svg)](https://dash.yunohost.org/appci/app/retroarch) ![](https://ci-apps.yunohost.org/ci/badges/retroarch.status.svg) ![](https://ci-apps.yunohost.org/ci/badges/retroarch.maintain.svg)  
+[![Installer Retroarch Web Player avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=retroarch)
 
-*[Read this readme in english.](./README.md)* 
+*[Read this readme in english.](./README.md)*
+*[Lire ce readme en français.](./README_fr.md)*
 
-> *Ce package vous permet d'installer retroarch rapidement et simplement sur un serveur Yunohost.  
+> *Ce package vous permet d'installer Retroarch Web Player rapidement et simplement sur un serveur YunoHost.
 Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour savoir comment l'installer et en profiter.*
 
 ## Vue d'ensemble
-RetroArch est un frontend pour des émulateurs, des moteurs de jeux et des lecteurs média.
-Il vous permet de rejouer à des classiques du jeu vidéo sur une large gamme d'ordinateur et de console grace à son interface graphique légère. Les réglages sont unifiés afin de n'avoir a effectuer les réglages qu'une seule fois.
 
-Le Web Player Retroarch utilise RetroArch compilé grace à [Emscripten](http://kripken.github.io/emscripten-site/).
+Emulez des consoles de jeux et jouer à ces jeux vidéos dans votre explorateur web... Et beaucoup plus!
 
+**Version incluse :** 1.9.7
 
-**Version incluse:** 1.9.6
+**Démo :** https://web.libretro.com/
 
 ## Captures d'écran
 
-![](https://github.com/libretro/RetroArch/blob/master/docs/ozone-main-menu.jpg)
+![](./doc/screenshots/XMB-main-menu.jpg)
+![](./doc/screenshots/rgui-main-menu.jpg)
+![](./doc/screenshots/ozone-main-menu.jpg)
 
-## Démo
+## Avertissements / informations importantes
 
-* [Démo officielle](https://web.libretro.com/)
-
-
-## Documentation
-
- * [Website officiel](https://www.retroarch.com/)
- * [Documentation officielle du web player](https://github.com/libretro/RetroArch/tree/master/pkg/emscripten) (c'est très très léger...)
- * [Documentation officielle](https://docs.libretro.com/)
-
-## Caractéristiques spécifiques YunoHost
-
-#### Bibliothèque partagée
+### Bibliothèque partagée
 
 Même si vous pouvez uploader une ROM depuis l'application, RetroArch peut accéder à celle déjà sur votre serveur:
 * Les jeux sont situés dans `/opt/yunohost/retroarch/assets/cores`. Un lien symbolique est créé vers `/home/yunohost.multimedia/share/Games` de façon à ce que vous puissiez les y mettre facilement.
 * Les cores doivent être indexés pour fonctionner : le script `/opt/yunohost/retroarch/indexer.sh` tourne toutes les 5 minutes pour indexer tous les jeux dans `opt/yunohost/retroarch/assets/cores`
 
-#### Architectures supportées
+### Architectures supportées
 
 * x86-64b - [![Build Status](https://ci-apps.yunohost.org/ci/logs/retroarch%20%28Apps%29.svg)](https://ci-apps.yunohost.org/ci/apps/retroarch/)
 * ARMv8-A - [![Build Status](https://ci-apps-arm.yunohost.org/ci/logs/retroarch%20%28Apps%29.svg)](https://ci-apps-arm.yunohost.org/ci/apps/retroarch/)
 * Jessie x86-64b - [![Build Status](https://ci-stretch.nohost.me/ci/logs/retroarch%20%28Apps%29.svg)](https://ci-stretch.nohost.me/ci/apps/retroarch/)
 
-## Limitations
+### Limitations
 
 * On ne peut pas sauvegarder. En fait, on ne peut pas écrire dans les fichiers du tout, donc la configuration est perdue à chaque fois...
 * Pas de gestion d'utilisateurs
 * certains cores sont listés mais ne sont pas implémentés : ils ne fonctionnent donc pas, le problème vient de l'application elle même.
 
-## Liens
+## Documentations et ressources
 
- * Signaler un bug: https://github.com/YunoHost-Apps/retroarch_ynh/issues
- * Site de l'application: [Official Website](https://www.retroarch.com/)
- * Dépôt de l'application principale: https://github.com/libretro/RetroArch/tree/master/pkg/emscripten
- * Site web YunoHost: https://yunohost.org/
+* Site officiel de l'app : http://www.retroarch.com/
+* Documentation officielle utilisateur : https://docs.libretro.com/
+* Documentation officielle de l'admin : https://docs.libretro.com/
+* Dépôt de code officiel de l'app : https://github.com/libretro/RetroArch
+* Documentation YunoHost pour cette app : https://yunohost.org/app_retroarch
+* Signaler un bug : https://github.com/YunoHost-Apps/retroarch_ynh/issues
 
----
+## Informations pour les développeurs
 
-Informations pour les développeurs
-----------------
-
-**Seulement si vous voulez utiliser une branche de test pour le codage, au lieu de fusionner directement dans la banche principale.**
 Merci de faire vos pull request sur la [branche testing](https://github.com/YunoHost-Apps/retroarch_ynh/tree/testing).
 
 Pour essayer la branche testing, procédez comme suit.
@@ -73,3 +62,5 @@ sudo yunohost app install https://github.com/YunoHost-Apps/retroarch_ynh/tree/te
 ou
 sudo yunohost app upgrade retroarch -u https://github.com/YunoHost-Apps/retroarch_ynh/tree/testing --debug
 ```
+
+**Plus d'infos sur le packaging d'applications :** https://yunohost.org/packaging_apps
