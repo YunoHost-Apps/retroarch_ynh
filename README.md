@@ -17,9 +17,9 @@ If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/in
 
 Emulate videogames system and play videogames through your web browser... and more!
 
-**Shipped version:** 1.9.6~ynh1
+**Shipped version:** 1.9.7
 
-
+**Demo:** https://web.libretro.com/
 
 ## Screenshots
 
@@ -50,6 +50,10 @@ Although you can upload a ROM at runtime, retroarch may have access to the ROMs 
 
 ## Documentation and resources
 
+* Official app website: http://www.retroarch.com/
+* Official user documentation: https://docs.libretro.com/
+* Official admin documentation: https://docs.libretro.com/
+* Upstream app code repository: https://github.com/libretro/RetroArch
 * YunoHost documentation for this app: https://yunohost.org/app_retroarch
 * Report a bug: https://github.com/YunoHost-Apps/retroarch_ynh/issues
 
