@@ -13,9 +13,9 @@ Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour
 
 Emulez des consoles de jeux et jouer à ces jeux vidéos dans votre explorateur web... Et beaucoup plus!
 
-**Version incluse :** 1.9.6~ynh1
+**Version incluse :** 1.9.7
 
-
+**Démo :** https://web.libretro.com/
 
 ## Captures d'écran
 
@@ -45,6 +45,10 @@ Même si vous pouvez uploader une ROM depuis l'application, RetroArch peut accé
 
 ## Documentations et ressources
 
+* Site officiel de l'app : http://www.retroarch.com/
+* Documentation officielle utilisateur : https://docs.libretro.com/
+* Documentation officielle de l'admin : https://docs.libretro.com/
+* Dépôt de code officiel de l'app : https://github.com/libretro/RetroArch
 * Documentation YunoHost pour cette app : https://yunohost.org/app_retroarch
 * Signaler un bug : https://github.com/YunoHost-Apps/retroarch_ynh/issues
 
