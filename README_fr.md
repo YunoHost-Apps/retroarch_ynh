@@ -13,7 +13,7 @@ Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour
 
 Emulez des consoles de jeux et jouer à ces jeux vidéos dans votre explorateur web... Et beaucoup plus!
 
-**Version incluse :** 1.9.7
+**Version incluse :** 1.9.8
 
 **Démo :** https://web.libretro.com/
 
