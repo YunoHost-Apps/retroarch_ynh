@@ -17,7 +17,7 @@ If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/in
 
 Emulate videogames system and play videogames through your web browser... and more!
 
-**Shipped version:** 1.9.7
+**Shipped version:** 1.9.8
 
 **Demo:** https://web.libretro.com/
 
