@@ -28,6 +28,7 @@ domain=$YNH_APP_ARG_DOMAIN
 path_url=$YNH_APP_ARG_PATH
 is_public=$YNH_APP_ARG_IS_PUBLIC
 app=$YNH_APP_INSTANCE_NAME
+upstream_version=$YNH_APP_MANIFEST_VERSION
 
 #=================================================
 # CHECK IF THE APP CAN BE INSTALLED WITH THESE ARGS
