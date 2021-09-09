@@ -54,7 +54,7 @@ ynh_app_setting_set --app=$app --key=path --value=$path_url
 #=================================================
 ynh_script_progression --message="Installing dependencies..." --weight=13
 
-ynh_install_nodejs --nodejs_version=10
+ynh_install_nodejs --nodejs_version=$nodejs_version
 ynh_use_nodejs
 ynh_npm install -g coffeescript
 
@@ -98,6 +98,7 @@ chmod 666 $final_path/assets/cores/Game/README
 ynh_add_config --template="../conf/indexer.sh" --destination="$final_path/indexer.sh"
 chown www-data: $final_path/indexer.sh
 chmod 744 $final_path/indexer.sh
+
 #setup cron file
 cron_path="/etc/cron.d/$app"
 ynh_add_config --template="../conf/retroarch.cron" --destination="$cron_path"
@@ -107,7 +108,7 @@ chmod 644 "$cron_path"
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
-ynh_script_progression --message="Configuring nginx web server..." --weight=3
+ynh_script_progression --message="Configuring NGINX web server..." --weight=3
 
 #backup & Update nginx MIME type so wasm mime type is recognized
 
@@ -131,7 +132,7 @@ chown -R www-data: $final_path
 #=================================================
 # SETUP SSOWAT
 #=================================================
-ynh_script_progression --message="Configuring SSOwat..." --weight=1
+ynh_script_progression --message="Configuring permissions..." --weight=1
 
 # Make app public if necessary
 if [ $is_public -eq 1 ]
@@ -155,7 +156,7 @@ cd $final_path/assets/cores
 #=================================================
 # RELOAD NGINX
 #=================================================
-ynh_script_progression --message="Reloading nginx web server..." --weight=1
+ynh_script_progression --message="Reloading NGINX web server..." --weight=1
 
 ynh_systemd_action --service_name=nginx --action=reload
 

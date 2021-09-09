@@ -15,7 +15,11 @@ If you don't have YunoHost, please consult [the guide](https://yunohost.org/#/in
 
 ## Overview
 
-Emulate videogames system and play videogames through your web browser... and more!
+RetroArch is a frontend for emulators, game engines and media players.
+It enables you to run classic games on a wide range of computers and consoles through its slick graphical interface. Settings are also unified so configuration is done once and for all.
+In addition to this, you are able to run original game discs (CDs) from RetroArch.
+RetroArch has advanced features like shaders, netplay, rewinding, next-frame response times, runahead, machine translation, blind accessibility features, and more!
+
 
 **Shipped version:** 1.9.8
 
@@ -36,17 +40,11 @@ Although you can upload a ROM at runtime, retroarch may have access to the ROMs 
 * Games are located in `/opt/yunohost/retroarch/assets/cores`. A symbolic link is created to this folder in `/home/yunohost.multimedia/share/Games`, so that you can place your games from here
 * cores have to be indexed to work : script `/opt/yunohost/retroarch/indexer.sh` run every 5 minutes to index all games in `opt/yunohost/retroarch/assets/cores`
 
-
-### Supported architectures
-
-* x86-64b - [![Build Status](https://ci-apps.yunohost.org/ci/logs/retroarch%20%28Apps%29.svg)](https://ci-apps.yunohost.org/ci/apps/retroarch/)
-* ARMv8-A - [![Build Status](https://ci-apps-arm.yunohost.org/ci/logs/retroarch%20%28Apps%29.svg)](https://ci-apps-arm.yunohost.org/ci/apps/retroarch/)
-
 ### Limitations
 
-* cannot save game, in fact, cannot write at all... so configuration is lost each time you start again
-* no user management
-* some core are listed but not implemented : they do not work, the issue is from the upstream app.
+* Cannot save game, in fact, cannot write at all... so configuration is lost each time you start again
+* No user management
+* Some core are listed but not implemented : they do not work, the issue is from the upstream app.
 
 ## Documentation and resources
 

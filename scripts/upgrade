@@ -25,12 +25,6 @@ final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 # CHECK VERSION
 #=================================================
 
-### This helper will compare the version of the currently installed app and the version of the upstream package.
-### $upgrade_type can have 2 different values
-### - UPGRADE_APP if the upstream app version has changed
-### - UPGRADE_PACKAGE if only the YunoHost package has changed
-### ynh_check_app_version_changed will stop the upgrade if the app is up to date.
-### UPGRADE_APP should be used to upgrade the core app only if there's an upgrade to do.
 upgrade_type=$(ynh_check_app_version_changed)
 
 #=================================================
@@ -111,7 +105,7 @@ ynh_script_progression --message="Upgrading dependencies..." --weight=20
 #Dependencies are not really required as this is just to unzip the 7z file
 ynh_install_app_dependencies $pkg_dependencies
 #However, npm IS required to run the coffeescript
-ynh_install_nodejs --nodejs_version=10
+ynh_install_nodejs --nodejs_version=$nodejs_version
 ynh_use_nodejs
 ynh_npm install -g coffeescript
 
@@ -120,9 +114,8 @@ ynh_npm install -g coffeescript
 #=================================================
 # Set permissions on app files
 #=================================================
-# 
-chown -R www-data: $final_path
 
+chown -R www-data: $final_path
 
 #=================================================
 # RELOAD NGINX
