@@ -48,7 +48,6 @@ ynh_backup --src_path="$final_path"
 
 ynh_backup --src_path="/etc/nginx/conf.d/$domain.d/$app.conf"
 
-
 #=================================================
 # SPECIFIC BACKUP
 #=================================================
@@ -56,7 +55,6 @@ ynh_backup --src_path="/etc/nginx/conf.d/$domain.d/$app.conf"
 #=================================================
 
 ynh_backup --src_path="/etc/cron.d/$app"
-
 
 #=================================================
 # END OF SCRIPT

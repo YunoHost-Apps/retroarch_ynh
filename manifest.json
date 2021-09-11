@@ -3,13 +3,13 @@
     "id": "retroarch",
     "packaging_format": 1,
     "description": {
-        "en": "Emulate videogames system and play videogames through your web browser... and more!",
-        "fr": "Emulez des consoles de jeux et jouer à ces jeux vidéos dans votre explorateur web... Et beaucoup plus!"
+        "en": "Emulate videogames system and play videogames through your web browser",
+        "fr": "Emulez des consoles de jeux et jouer à ces jeux vidéos dans votre explorateur web"
     },
-    "version": "1.9.7~ynh2",
+    "version": "1.9.8~ynh1",
     "url": "http://www.retroarch.com/",
     "upstream": {
-        "version": "1.9.7",
+        "version": "1.9.8",
         "license": "GPL-3.0-or-later",
         "website": "http://www.retroarch.com/",
         "demo": "https://web.libretro.com/",

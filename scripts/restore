@@ -37,8 +37,6 @@ final_path=$(ynh_app_setting_get --app=$app --key=final_path)
 #=================================================
 ynh_script_progression --message="Validating restoration parameters..." --weight=1
 
-ynh_webpath_available --domain=$domain --path_url=$path_url \
-	|| ynh_die --message="Path not available: ${domain}${path_url}"
 test ! -d $final_path \
 	|| ynh_die --message="There is already a directory: $final_path "
 
@@ -58,7 +56,6 @@ if [ !$(grep wasm /etc/nginx/mime.types) ]; then
 	ynh_replace_string --match_string="    application/octet-stream              bin exe dll;" --replace_string="    application/wasm                      wasm;\n\n    application/octet-stream              bin exe dll;" --target_file="/etc/nginx/mime.types"
 	ynh_store_file_checksum --file="/etc/nginx/mime.types"
 fi
-
 
 #=================================================
 # RESTORE THE APP MAIN DIR
@@ -89,7 +86,6 @@ ynh_install_nodejs --nodejs_version=10
 ynh_use_nodejs
 ynh_npm install -g coffeescript
 
-
 #=================================================
 #SETTING MULTIMEDIA DIRECTORY
 #=================================================
@@ -106,7 +102,6 @@ chmod 666 $final_path/assets/cores/Game/README
 #=================================================
 
 ynh_restore_file --origin_path="/etc/cron.d/$app"
-
 
 #=================================================
 # GENERIC FINALIZATION

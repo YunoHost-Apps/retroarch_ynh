@@ -7,6 +7,8 @@
 # dependencies used by the app
 pkg_dependencies="p7zip"
 
+nodejs_version=10
+
 #=================================================
 # PERSONAL HELPERS
 #=================================================
