@@ -6,10 +6,10 @@
         "en": "Emulate videogames system and play videogames through your web browser",
         "fr": "Emulez des consoles de jeux et jouer à ces jeux vidéos dans votre explorateur web"
     },
-    "version": "1.9.9~ynh1",
+    "version": "1.9.10~ynh1",
     "url": "http://www.retroarch.com/",
     "upstream": {
-        "version": "1.9.9",
+        "version": "1.9.10",
         "license": "GPL-3.0-or-later",
         "website": "http://www.retroarch.com/",
         "demo": "https://web.libretro.com/",
