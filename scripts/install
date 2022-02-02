@@ -102,7 +102,6 @@ chmod 744 $final_path/indexer.sh
 #setup cron file
 cron_path="/etc/cron.d/$app"
 ynh_add_config --template="../conf/retroarch.cron" --destination="$cron_path"
-chown www-data: "$cron_path"
 chmod 644 "$cron_path"
 
 #=================================================
@@ -128,6 +127,8 @@ ynh_add_nginx_config
 
 # Set permissions to app files
 chown -R www-data: $final_path
+# Requested so that multimedia group can see the Game folder : all parent folder should be readable by others 
+chmod 751 $final_path
 
 #=================================================
 # SETUP SSOWAT

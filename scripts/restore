@@ -70,6 +70,8 @@ ynh_restore_file --origin_path="$final_path"
 
 # Restore permissions on app files
 chown -R www-data: $final_path
+# Requested so that multimedia group can see the Game folder : all parent folder should be readable by others 
+chmod 751 $final_path
 
 #=================================================
 # SPECIFIC RESTORATION
