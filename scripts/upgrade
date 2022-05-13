@@ -15,7 +15,6 @@ source /usr/share/yunohost/helpers
 ynh_script_progression --message="Loading installation settings..." --weight=1
 
 app=$YNH_APP_INSTANCE_NAME
-upstream_version=$(ynh_app_upstream_version)
 
 domain=$(ynh_app_setting_get --app=$app --key=domain)
 path_url=$(ynh_app_setting_get --app=$app --key=path)
@@ -52,7 +51,6 @@ then
 	ynh_script_progression --message="Upgrading source files..." --weight=5
 
 	# Download, check integrity, uncompress and patch the source from app.src
-	ynh_add_config --template="../conf/app.src.default" --destination="../conf/retroarch.src"
 	ynh_setup_source --dest_dir="$final_path" --source_id=$app
 	#7z archive not handled by ynh and no way to strip component, have to move it manually
 	7zr x $final_path/retroarch.7z -o$final_path

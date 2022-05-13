@@ -28,7 +28,6 @@ domain=$YNH_APP_ARG_DOMAIN
 path_url=$YNH_APP_ARG_PATH
 is_public=$YNH_APP_ARG_IS_PUBLIC
 app=$YNH_APP_INSTANCE_NAME
-upstream_version=$(ynh_app_upstream_version)
 
 #=================================================
 # CHECK IF THE APP CAN BE INSTALLED WITH THESE ARGS
@@ -68,7 +67,6 @@ ynh_script_progression --message="Setting up source files..." --weight=60
 ynh_app_setting_set --app=$app --key=final_path --value=$final_path
 # Download, check integrity, uncompress and patch the source from app.src
 # uncompress and patch done manually as 7z format is not supported
-ynh_add_config --template="../conf/app.src.default" --destination="../conf/retroarch.src"
 ynh_setup_source --dest_dir="$final_path" --source_id=$app
 #7z archive not handled by ynh and no way to strip component, have to move it manually
 7zr x $final_path/retroarch.7z -o$final_path
