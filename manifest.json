@@ -30,7 +30,7 @@
         "nginx"
     ],
     "arguments": {
-        "install" : [
+        "install": [
             {
                 "name": "domain",
                 "type": "domain"
@@ -45,9 +45,9 @@
                 "name": "is_public",
                 "type": "boolean",
                 "default": true,
-                "help":{
-                	"en":"Yes will allow everyone to access the app without login to yunohost instance first",
-                	"fr":"Oui autorisera n'importe qui à accéder à l'application sans s'identifier dans Yunohost"
+                "help": {
+                    "en": "Yes will allow everyone to access the app without login to yunohost instance first",
+                    "fr": "Oui autorisera n'importe qui à accéder à l'application sans s'identifier dans Yunohost"
                 }
             }
         ]
