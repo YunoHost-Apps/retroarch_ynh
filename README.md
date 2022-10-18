@@ -5,7 +5,7 @@ It shall NOT be edited by hand.
 
 # Retroarch Web Player for YunoHost
 
-[![Integration level](https://dash.yunohost.org/integration/retroarch.svg)](https://dash.yunohost.org/appci/app/retroarch) ![](https://ci-apps.yunohost.org/ci/badges/retroarch.status.svg) ![](https://ci-apps.yunohost.org/ci/badges/retroarch.maintain.svg)  
+[![Integration level](https://dash.yunohost.org/integration/retroarch.svg)](https://dash.yunohost.org/appci/app/retroarch) ![Working status](https://ci-apps.yunohost.org/ci/badges/retroarch.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/retroarch.maintain.svg)  
 [![Install Retroarch Web Player with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=retroarch)
 
 *[Lire ce readme en français.](./README_fr.md)*
@@ -22,14 +22,13 @@ RetroArch has advanced features like shaders, netplay, rewinding, next-frame res
 
 
 **Shipped version:** 1.10.3
-
 **Demo:** https://web.libretro.com/
 
 ## Screenshots
 
-![](./doc/screenshots/XMB-main-menu.jpg)
-![](./doc/screenshots/rgui-main-menu.jpg)
-![](./doc/screenshots/ozone-main-menu.jpg)
+![Screenshot of Retroarch Web Player](./doc/screenshots/XMB-main-menu.jpg)
+![Screenshot of Retroarch Web Player](./doc/screenshots/rgui-main-menu.jpg)
+![Screenshot of Retroarch Web Player](./doc/screenshots/ozone-main-menu.jpg)
 
 ## Disclaimers / important information
 
@@ -48,22 +47,23 @@ Although you can upload a ROM at runtime, retroarch may have access to the ROMs 
 
 ## Documentation and resources
 
-* Official app website: http://www.retroarch.com/
-* Official user documentation: https://docs.libretro.com/
-* Official admin documentation: https://docs.libretro.com/
-* Upstream app code repository: https://github.com/libretro/RetroArch
-* YunoHost documentation for this app: https://yunohost.org/app_retroarch
-* Report a bug: https://github.com/YunoHost-Apps/retroarch_ynh/issues
+* Official app website: <http://www.retroarch.com/>
+* Official user documentation: <https://docs.libretro.com/>
+* Official admin documentation: <https://docs.libretro.com/>
+* Upstream app code repository: <https://github.com/libretro/RetroArch>
+* YunoHost documentation for this app: <https://yunohost.org/app_retroarch>
+* Report a bug: <https://github.com/YunoHost-Apps/retroarch_ynh/issues>
 
 ## Developer info
 
 Please send your pull request to the [testing branch](https://github.com/YunoHost-Apps/retroarch_ynh/tree/testing).
 
 To try the testing branch, please proceed like that.
-```
+
+``` bash
 sudo yunohost app install https://github.com/YunoHost-Apps/retroarch_ynh/tree/testing --debug
 or
 sudo yunohost app upgrade retroarch -u https://github.com/YunoHost-Apps/retroarch_ynh/tree/testing --debug
 ```
 
-**More info regarding app packaging:** https://yunohost.org/packaging_apps
+**More info regarding app packaging:** <https://yunohost.org/packaging_apps>
