@@ -6,7 +6,7 @@
         "en": "Emulate videogames system and play videogames through your web browser",
         "fr": "Emulez des consoles de jeux et jouer à ces jeux vidéos dans votre explorateur web"
     },
-    "version": "1.10.3~ynh1",
+    "version": "1.12.0~ynh1",
     "url": "http://www.retroarch.com/",
     "upstream": {
         "version": "1.10.3",
@@ -30,7 +30,7 @@
         "nginx"
     ],
     "arguments": {
-        "install" : [
+        "install": [
             {
                 "name": "domain",
                 "type": "domain"
@@ -45,9 +45,9 @@
                 "name": "is_public",
                 "type": "boolean",
                 "default": true,
-                "help":{
-                	"en":"Yes will allow everyone to access the app without login to yunohost instance first",
-                	"fr":"Oui autorisera n'importe qui à accéder à l'application sans s'identifier dans Yunohost"
+                "help": {
+                    "en": "Yes will allow everyone to access the app without login to yunohost instance first",
+                    "fr": "Oui autorisera n'importe qui à accéder à l'application sans s'identifier dans Yunohost"
                 }
             }
         ]
