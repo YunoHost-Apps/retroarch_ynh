@@ -22,7 +22,6 @@ RetroArch has advanced features like shaders, netplay, rewinding, next-frame res
 
 
 **Shipped version:** 1.12.0
-
 **Demo:** https://web.libretro.com/
 
 ## Screenshots

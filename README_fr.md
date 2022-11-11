@@ -21,9 +21,7 @@ In addition to this, you are able to run original game discs (CDs) from RetroArc
 RetroArch has advanced features like shaders, netplay, rewinding, next-frame response times, runahead, machine translation, blind accessibility features, and more!
 
 
-
 **Version incluse :** 1.12.0
-
 **Démo :** https://web.libretro.com/
 
 ## Captures d'écran
