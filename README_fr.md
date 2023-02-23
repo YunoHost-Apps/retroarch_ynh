@@ -5,15 +5,16 @@ It shall NOT be edited by hand.
 
 # Retroarch Web Player pour YunoHost
 
-[![Niveau d'intégration](https://dash.yunohost.org/integration/retroarch.svg)](https://dash.yunohost.org/appci/app/retroarch) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/retroarch.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/retroarch.maintain.svg)  
+[![Niveau d’intégration](https://dash.yunohost.org/integration/retroarch.svg)](https://dash.yunohost.org/appci/app/retroarch) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/retroarch.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/retroarch.maintain.svg)
+
 [![Installer Retroarch Web Player avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=retroarch)
 
 *[Read this readme in english.](./README.md)*
 
-> *Ce package vous permet d'installer Retroarch Web Player rapidement et simplement sur un serveur YunoHost.
-Si vous n'avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour savoir comment l'installer et en profiter.*
+> *Ce package vous permet d’installer Retroarch Web Player rapidement et simplement sur un serveur YunoHost.
+Si vous n’avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) pour savoir comment l’installer et en profiter.*
 
-## Vue d'ensemble
+## Vue d’ensemble
 
 RetroArch is a frontend for emulators, game engines and media players.
 It enables you to run classic games on a wide range of computers and consoles through its slick graphical interface. Settings are also unified so configuration is done once and for all.
@@ -25,11 +26,11 @@ RetroArch has advanced features like shaders, netplay, rewinding, next-frame res
 
 **Démo :** https://web.libretro.com/
 
-## Captures d'écran
+## Captures d’écran
 
-![Capture d'écran de Retroarch Web Player](./doc/screenshots/XMB-main-menu.jpg)
-![Capture d'écran de Retroarch Web Player](./doc/screenshots/rgui-main-menu.jpg)
-![Capture d'écran de Retroarch Web Player](./doc/screenshots/ozone-main-menu.jpg)
+![Capture d’écran de Retroarch Web Player](./doc/screenshots/XMB-main-menu.jpg)
+![Capture d’écran de Retroarch Web Player](./doc/screenshots/rgui-main-menu.jpg)
+![Capture d’écran de Retroarch Web Player](./doc/screenshots/ozone-main-menu.jpg)
 
 ## Avertissements / informations importantes
 
@@ -47,10 +48,10 @@ Même si vous pouvez uploader une ROM depuis l'application, RetroArch peut accé
 
 ## Documentations et ressources
 
-* Site officiel de l'app : <http://www.retroarch.com/>
+* Site officiel de l’app : <http://www.retroarch.com/>
 * Documentation officielle utilisateur : <https://docs.libretro.com/>
-* Documentation officielle de l'admin : <https://docs.libretro.com/>
-* Dépôt de code officiel de l'app : <https://github.com/libretro/RetroArch>
+* Documentation officielle de l’admin : <https://docs.libretro.com/>
+* Dépôt de code officiel de l’app : <https://github.com/libretro/RetroArch>
 * Documentation YunoHost pour cette app : <https://yunohost.org/app_retroarch>
 * Signaler un bug : <https://github.com/YunoHost-Apps/retroarch_ynh/issues>
 
@@ -66,4 +67,4 @@ ou
 sudo yunohost app upgrade retroarch -u https://github.com/YunoHost-Apps/retroarch_ynh/tree/testing --debug
 ```
 
-**Plus d'infos sur le packaging d'applications :** <https://yunohost.org/packaging_apps>
+**Plus d’infos sur le packaging d’applications :** <https://yunohost.org/packaging_apps>
