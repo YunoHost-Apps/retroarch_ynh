@@ -5,7 +5,8 @@ It shall NOT be edited by hand.
 
 # Retroarch Web Player for YunoHost
 
-[![Integration level](https://dash.yunohost.org/integration/retroarch.svg)](https://dash.yunohost.org/appci/app/retroarch) ![Working status](https://ci-apps.yunohost.org/ci/badges/retroarch.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/retroarch.maintain.svg)  
+[![Integration level](https://dash.yunohost.org/integration/retroarch.svg)](https://dash.yunohost.org/appci/app/retroarch) ![Working status](https://ci-apps.yunohost.org/ci/badges/retroarch.status.svg) ![Maintenance status](https://ci-apps.yunohost.org/ci/badges/retroarch.maintain.svg)
+
 [![Install Retroarch Web Player with YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=retroarch)
 
 *[Lire ce readme en français.](./README_fr.md)*
@@ -21,7 +22,7 @@ In addition to this, you are able to run original game discs (CDs) from RetroArc
 RetroArch has advanced features like shaders, netplay, rewinding, next-frame response times, runahead, machine translation, blind accessibility features, and more!
 
 
-**Shipped version:** 1.14.0~ynh1
+**Shipped version:** 1.15.0~ynh1
 
 **Demo:** https://web.libretro.com/
 
