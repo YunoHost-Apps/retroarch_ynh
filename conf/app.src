@@ -1,5 +1,5 @@
-SOURCE_URL=https://buildbot.libretro.com/stable/1.14.0/emscripten/RetroArch.7z
-SOURCE_SUM=45e7c2bee2cb80ffc10db59da0863b3a1d1d1c2d400d4c6daeca6fc272934d9f
+SOURCE_URL=https://buildbot.libretro.com/stable/1.15.0/emscripten/RetroArch.7z
+SOURCE_SUM=426aba099daa69835a4b9ed1e1653b1e3fcf7efefa76f0cea97aef16477b4f6e
 SOURCE_SUM_PRG=sha256sum
 SOURCE_FORMAT=7z
 SOURCE_FILENAME=retroarch.7z
