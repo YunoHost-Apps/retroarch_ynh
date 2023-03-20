@@ -28,8 +28,6 @@ RetroArch has advanced features like shaders, netplay, rewinding, next-frame res
 
 ## Screenshots
 
-![Screenshot of Retroarch Web Player](./doc/screenshots/XMB-main-menu.jpg)
-![Screenshot of Retroarch Web Player](./doc/screenshots/rgui-main-menu.jpg)
 ![Screenshot of Retroarch Web Player](./doc/screenshots/ozone-main-menu.jpg)
 
 ## Disclaimers / important information
