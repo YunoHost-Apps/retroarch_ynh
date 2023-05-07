@@ -12,23 +12,23 @@ source /usr/share/yunohost/helpers
 #=================================================
 # LOAD SETTINGS
 #=================================================
-ynh_script_progression --message="Loading installation settings..." --weight=1
+#REMOVEME? ynh_script_progression --message="Loading installation settings..." --weight=1
 
-app=$YNH_APP_INSTANCE_NAME
+#REMOVEME? app=$YNH_APP_INSTANCE_NAME
 
-domain=$(ynh_app_setting_get --app=$app --key=domain)
-final_path=$(ynh_app_setting_get --app=$app --key=final_path)
+#REMOVEME? domain=$(ynh_app_setting_get --app=$app --key=domain)
+#REMOVEME? #REMOVEME? install_dir=$(ynh_app_setting_get --app=$app --key=install_dir)
 
 #=================================================
 # REMOVE DEPENDENCIES
 #=================================================
-ynh_script_progression --message="Removing dependencies..." --weight=7
+#REMOVEME? ynh_script_progression --message="Removing dependencies..." --weight=7
 
 # Remove metapackage and its dependencies
 ynh_use_nodejs
 ynh_npm uninstall -g coffeescript
 ynh_remove_nodejs
-ynh_remove_app_dependencies
+#REMOVEME? ynh_remove_app_dependencies
 
 #=================================================
 # REMOVE CRONJOB
@@ -47,10 +47,10 @@ ynh_secure_remove --file="/home/yunohost.multimedia/share/Game"
 #=================================================
 # REMOVE APP MAIN DIR
 #=================================================
-ynh_script_progression --message="Removing app main directory..." --weight=1
+#REMOVEME? ynh_script_progression --message="Removing app main directory..." --weight=1
 
 # Remove the app directory securely
-ynh_secure_remove --file="$final_path"
+#REMOVEME? ynh_secure_remove --file="$install_dir"
 
 #=================================================
 # REMOVE NGINX CONFIGURATION
@@ -59,7 +59,7 @@ ynh_script_progression --message="Removing NGINX web server configuration..." --
 
 # Remove the dedicated nginx config
 ynh_remove_nginx_config
-if [ "$(ynh_app_setting_get --app=$app --key=checksum__etc_nginx_mime.types)" == "$(md5sum "/etc/nginx/mime.types" | cut -d ' ' -f 1)" ]; then
+#REMOVEME? if [ "$(ynh_app_setting_get --app=$app --key=checksum__etc_nginx_mime.types)" == "$(md5sum "/etc/nginx/mime.types" | cut -d ' ' -f 1)" ]; then
 	#file has not changed, restore the previous mime.type
 	rm /etc/nginx/mime.types
 	mv /etc/nginx/mime.types.$app /etc/nginx/mime.types

@@ -15,15 +15,15 @@ source _common.sh
 #=================================================
 
 app=__APP__
-final_path=$(ynh_app_setting_get --app=$app --key=final_path)
+install_dir=$(ynh_app_setting_get --app=$app --key=install_dir)
 
 #=================================================
 # Update the index
 #=================================================
 
 ynh_use_nodejs
-cd $final_path/assets/frontend/bundle/
+cd $install_dir/assets/frontend/bundle/
 ../../../indexer > .index-xhr
-cd $final_path/assets/cores
+cd $install_dir/assets/cores
 ../../indexer > .index-xhr
 
