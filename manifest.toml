@@ -1,0 +1,64 @@
+packaging_format = 2
+
+id = "retroarch"
+name = "Retroarch Web Player"
+description.en = "Emulate videogames system and play videogames through your web browser"
+description.fr = "Emulez des consoles de jeux et jouer à ces jeux vidéos dans votre explorateur web"
+
+version = "1.15.0~ynh3"
+
+maintainers = ["Krakinou"]
+
+[upstream]
+license = "GPL-3.0-or-later"
+website = "http://www.retroarch.com/"
+demo = "https://web.libretro.com/"
+admindoc = "https://docs.libretro.com/"
+userdoc = "https://docs.libretro.com/"
+code = "https://github.com/libretro/RetroArch"
+
+[integration]
+yunohost = ">= 11.1.18"
+architectures = "all"
+multi_instance = false
+ldap = "not_relevant" 
+sso = "not_relevant"
+disk = "1G"
+ram.build = "150M"
+ram.runtime = "50M"
+
+[install]
+    [install.domain]
+    # this is a generic question - ask strings are automatically handled by Yunohost's core
+    type = "domain"
+
+    [install.path]
+    # this is a generic question - ask strings are automatically handled by Yunohost's core
+    type = "path"
+    default = "/retroarch"
+
+    [install.init_main_permission]
+    help.en = "Yes will allow everyone to access the app without login to yunohost instance first"
+    help.fr = "Oui autorisera n'importe qui à accéder à l'application sans s'identifier dans Yunohost"
+    type = "group"
+    default = "visitors"
+
+[resources]
+    [resources.sources]
+
+        [resources.sources.main]
+        url = "https://buildbot.libretro.com/stable/1.15.0/emscripten/RetroArch.7z"
+        sha256 = "ce4f8319850545478d9b18cb103de0234fc36a1b50788c82cfb0ca308e793914"
+        format = "whatever"
+        in_subdir = true
+        extract = false
+        
+    [resources.system_user]
+
+    [resources.install_dir]
+
+    [resources.permissions]
+    main.url = "/"
+
+    [resources.apt]
+    packages = "p7zip"

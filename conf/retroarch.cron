@@ -1,2 +1,2 @@
 #This script will update the core index every 5 minutes so that they are available in retroarch
-*/5 * * * * root __FINAL_PATH__/indexer.sh > /dev/null 2>&1
+*/5 * * * * root __INSTALL_DIR__/indexer.sh > /dev/null 2>&1

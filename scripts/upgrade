@@ -10,36 +10,23 @@ source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
-# LOAD SETTINGS
-#=================================================
-ynh_script_progression --message="Loading installation settings..." --weight=1
-
-app=$YNH_APP_INSTANCE_NAME
-
-domain=$(ynh_app_setting_get --app=$app --key=domain)
-path_url=$(ynh_app_setting_get --app=$app --key=path)
-final_path=$(ynh_app_setting_get --app=$app --key=final_path)
-
-#=================================================
 # CHECK VERSION
 #=================================================
 
 upgrade_type=$(ynh_check_app_version_changed)
 
 #=================================================
-# BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
+# ENSURE DOWNWARD COMPATIBILITY
 #=================================================
-ynh_script_progression --message="Backing up the app before upgrading (may take a while)..." --weight=10
+ynh_script_progression --message="Downward Compatibility checks..." --weight=1
 
-# Backup the current version of the app
-ynh_backup_before_upgrade
-ynh_clean_setup () {
-	# Restore it if the upgrade fails
-	ynh_restore_upgradebackup
-}
-# Exit if an error occurs during the execution of the script
-ynh_abort_if_errors
-
+#move from /opt/yunohost to /var/www : symbolic link will be remade by multimedia dir
+if ynh_compare_current_package_version --comparison lt --version 1.15.0~ynh3; then
+	if [ -L /home/yunohost.multimedia/share/Game ]; then
+		#ynh_secure_remove --file="/home/yunohost.multimedia/share/Game"
+		rm /home/yunohost.multimedia/share/Game #ynh_secure_remove does not remove link
+	fi
+fi
 #=================================================
 # STANDARD UPGRADE STEPS
 #=================================================
@@ -51,24 +38,23 @@ then
 	ynh_script_progression --message="Upgrading source files..." --weight=5
 
 	# Download, check integrity, uncompress and patch the source from app.src
-	ynh_setup_source --dest_dir="$final_path"
+	ynh_setup_source --dest_dir="$install_dir"
 	#7z archive not handled by ynh and no way to strip component, have to move it manually
-	7zr x $final_path/retroarch.7z -o$final_path
+	7zr x $install_dir/main -o$install_dir
 	#mv not working as target directory is not empty
-	cp -R $final_path/retroarch/* $final_path/
-	ynh_secure_remove --file="$final_path/retroarch.7z"
-	ynh_secure_remove --file="$final_path/retroarch"
-	touch $final_path/analytics.js #https://github.com/libretro/RetroArch/issues/4539#issuecomment-473345195
+	cp -R $install_dir/retroarch/* $install_dir/
+	ynh_secure_remove --file="$install_dir/main"
+	touch $install_dir/analytics.js #https://github.com/libretro/RetroArch/issues/4539#issuecomment-473345195
 	#Get the indexer as exe so that folder w/ ROMs can be indexed
-	chmod +x $final_path/indexer
+	chmod +x $install_dir/indexer
 fi
 
 # SETUP CRON FILE FOR INDEXER
 
 #setup indexer bash script
-ynh_add_config --template="../conf/indexer.sh" --destination="$final_path/indexer.sh"
-chown www-data: $final_path/indexer.sh
-chmod 744 $final_path/indexer.sh
+ynh_add_config --template="../conf/indexer.sh" --destination="$install_dir/indexer.sh"
+chown www-data: $install_dir/indexer.sh
+chmod 744 $install_dir/indexer.sh
 #setup cron file
 cron_path="/etc/cron.d/$app"
 ynh_add_config --template="../conf/retroarch.cron" --destination="$cron_path"
@@ -81,10 +67,10 @@ chmod 644 "$cron_path"
 ynh_script_progression --message="Setting up Multimedia directory..." --weight=4
 
 ynh_multimedia_build_main_dir
-mkdir -p $final_path/assets/cores/Game
-ynh_multimedia_addfolder --source_dir="$final_path/assets/cores/Game" --dest_dir="/share/Game"
-ynh_add_config --template="../conf/README.GAME" --destination="$final_path/assets/cores/Game/README"
-chmod 666 $final_path/assets/cores/Game/README
+mkdir -p $install_dir/assets/cores/Game
+ynh_multimedia_addfolder --source_dir="$install_dir/assets/cores/Game" --dest_dir="/share/Game"
+ynh_add_config --template="../conf/README.GAME" --destination="$install_dir/assets/cores/Game/README"
+chmod 666 $install_dir/assets/cores/Game/README
 
 #=================================================
 # NGINX CONFIGURATION
@@ -101,7 +87,6 @@ ynh_script_progression --message="Upgrading dependencies..." --weight=20
 
 # Define and install dependencies
 #Dependencies are not really required as this is just to unzip the 7z file
-ynh_install_app_dependencies $pkg_dependencies
 #However, npm IS required to run the coffeescript
 ynh_install_nodejs --nodejs_version=$nodejs_version
 ynh_use_nodejs
@@ -113,16 +98,9 @@ ynh_npm install -g coffeescript
 # Set permissions on app files
 #=================================================
 
-chown -R www-data: $final_path
+chown -R www-data:multimedia $install_dir
 # Requested so that multimedia group can see the Game folder : all parent folder should be readable by others 
-chmod 751 $final_path
-
-#=================================================
-# RELOAD NGINX
-#=================================================
-ynh_script_progression --message="Reloading NGINX web server..." --weight=1
-
-ynh_systemd_action --service_name=nginx --action=reload
+chmod 750 $install_dir
 
 #=================================================
 # END OF SCRIPT
