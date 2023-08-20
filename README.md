@@ -22,7 +22,7 @@ In addition to this, you are able to run original game discs (CDs) from RetroArc
 RetroArch has advanced features like shaders, netplay, rewinding, next-frame response times, runahead, machine translation, blind accessibility features, and more!
 
 
-**Shipped version:** 1.15.0~ynh2
+**Shipped version:** 1.15.0~ynh3
 
 **Demo:** https://web.libretro.com/
 
@@ -31,21 +31,6 @@ RetroArch has advanced features like shaders, netplay, rewinding, next-frame res
 ![Screenshot of Retroarch Web Player](./doc/screenshots/XMB-main-menu.jpg)
 ![Screenshot of Retroarch Web Player](./doc/screenshots/rgui-main-menu.jpg)
 ![Screenshot of Retroarch Web Player](./doc/screenshots/ozone-main-menu.jpg)
-
-## Disclaimers / important information
-
-### Use Shared ROMs library
-
-Although you can upload a ROM at runtime, retroarch may have access to the ROMs you already have on your server:
-
-* Games are located in `/opt/yunohost/retroarch/assets/cores`. A symbolic link is created to this folder in `/home/yunohost.multimedia/share/Games`, so that you can place your games from here
-* cores have to be indexed to work : script `/opt/yunohost/retroarch/indexer.sh` run every 5 minutes to index all games in `opt/yunohost/retroarch/assets/cores`
-
-### Limitations
-
-* Cannot save game, in fact, cannot write at all... so configuration is lost each time you start again
-* No user management
-* Some core are listed but not implemented : they do not work, the issue is from the upstream app.
 
 ## Documentation and resources
 
