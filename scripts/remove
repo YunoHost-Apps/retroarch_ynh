@@ -10,16 +10,6 @@ source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
-# LOAD SETTINGS
-#=================================================
-ynh_script_progression --message="Loading installation settings..." --weight=1
-
-app=$YNH_APP_INSTANCE_NAME
-
-domain=$(ynh_app_setting_get --app=$app --key=domain)
-final_path=$(ynh_app_setting_get --app=$app --key=final_path)
-
-#=================================================
 # REMOVE DEPENDENCIES
 #=================================================
 ynh_script_progression --message="Removing dependencies..." --weight=7
@@ -28,13 +18,6 @@ ynh_script_progression --message="Removing dependencies..." --weight=7
 ynh_use_nodejs
 ynh_npm uninstall -g coffeescript
 ynh_remove_nodejs
-ynh_remove_app_dependencies
-
-#=================================================
-# REMOVE CRONJOB
-#=================================================
-
-ynh_secure_remove --file="/etc/cron.d/$app"
 
 #=================================================
 # REMOVE MULTIMEDIA SYMBOLIC LINK
@@ -43,14 +26,8 @@ ynh_script_progression --message="Removing Game folder..." --weight=1
 
 # Remove the app directory securely
 ynh_secure_remove --file="/home/yunohost.multimedia/share/Game"
+ynh_secure_remove --file="/etc/cron.d/$app"
 
-#=================================================
-# REMOVE APP MAIN DIR
-#=================================================
-ynh_script_progression --message="Removing app main directory..." --weight=1
-
-# Remove the app directory securely
-ynh_secure_remove --file="$final_path"
 
 #=================================================
 # REMOVE NGINX CONFIGURATION

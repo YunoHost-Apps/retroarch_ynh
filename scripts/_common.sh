@@ -5,7 +5,7 @@
 #=================================================
 
 # dependencies used by the app
-pkg_dependencies="p7zip"
+#REMOVEME? pkg_dependencies="p7zip"
 
 nodejs_version=10
 
