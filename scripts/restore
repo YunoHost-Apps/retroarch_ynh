@@ -10,31 +10,6 @@
 source ../settings/scripts/_common.sh
 source /usr/share/yunohost/helpers
 
-#=================================================
-# MANAGE SCRIPT FAILURE
-#=================================================
-
-# Exit if an error occurs during the execution of the script
-#REMOVEME? ynh_abort_if_errors
-
-#=================================================
-# LOAD SETTINGS
-#=================================================
-ynh_script_progression --message="Loading settings..." --weight=1
-
-#REMOVEME? app=$YNH_APP_INSTANCE_NAME
-
-#REMOVEME? domain=$(ynh_app_setting_get --app=$app --key=domain)
-#REMOVEME? path=$(ynh_app_setting_get --app=$app --key=path)
-#REMOVEME? #REMOVEME? install_dir=$(ynh_app_setting_get --app=$app --key=install_dir)
-
-#=================================================
-# CHECK IF THE APP CAN BE RESTORED
-#=================================================
-#REMOVEME? ynh_script_progression --message="Validating restoration parameters..." --weight=1
-
-#REMOVEME? test ! -d $install_dir \
-	|| ynh_die --message="There is already a directory: $install_dir "
 
 #=================================================
 # STANDARD RESTORATION STEPS
@@ -61,26 +36,16 @@ ynh_script_progression --message="Restoring the app main directory..." --weight=
 ynh_restore_file --origin_path="$install_dir"
 
 #=================================================
-# RESTORE USER RIGHTS
-#=================================================
-
-# Restore permissions on app files
-chown -R www-data: $install_dir
-# Requested so that multimedia group can see the Game folder : all parent folder should be readable by others 
-chmod 751 $install_dir
-
-#=================================================
 # SPECIFIC RESTORATION
 #=================================================
 # REINSTALL DEPENDENCIES
 #=================================================
-#REMOVEME? ynh_script_progression --message="Reinstalling dependencies..." --weight=5
+ynh_script_progression --message="Reinstalling dependencies..." --weight=5
 
 # Define and install dependencies
 #Dependencies are not really required as this is just to unzip the 7z file
-#REMOVEME? ynh_install_app_dependencies $pkg_dependencies
 #However, npm IS required to run the coffeescript
-ynh_install_nodejs --nodejs_version=10
+ynh_install_nodejs --nodejs_version=$nodejs_version
 ynh_use_nodejs
 ynh_npm install -g coffeescript
 
@@ -94,6 +59,15 @@ mkdir -p $install_dir/assets/cores/Game
 ynh_multimedia_addfolder --source_dir="$install_dir/assets/cores/Game" --dest_dir="/share/Game"
 ynh_add_config --template="../conf/README.GAME" --destination="$install_dir/assets/cores/Game/README"
 chmod 666 $install_dir/assets/cores/Game/README
+
+#=================================================
+# RESTORE USER RIGHTS
+#=================================================
+
+# Restore permissions on app files
+chown -R www-data:multimedia $install_dir
+# Requested so that multimedia group can see the Game folder : all parent folder should be readable by others 
+chmod 750 $install_dir
 
 #=================================================
 # RESTORE THE CRON FILE
