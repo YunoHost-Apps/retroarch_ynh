@@ -22,7 +22,7 @@ In addition to this, you are able to run original game discs (CDs) from RetroArc
 RetroArch has advanced features like shaders, netplay, rewinding, next-frame response times, runahead, machine translation, blind accessibility features, and more!
 
 
-**Version incluse :** 1.15.0~ynh3
+**Version incluse :** 1.16.0~ynh1
 
 **Démo :** https://web.libretro.com/
 
@@ -36,7 +36,6 @@ RetroArch has advanced features like shaders, netplay, rewinding, next-frame res
 * Documentation officielle utilisateur : <https://docs.libretro.com/>
 * Documentation officielle de l’admin : <https://docs.libretro.com/>
 * Dépôt de code officiel de l’app : <https://github.com/libretro/RetroArch>
-* Documentation YunoHost pour cette app : <https://yunohost.org/app_retroarch>
 * Signaler un bug : <https://github.com/YunoHost-Apps/retroarch_ynh/issues>
 
 ## Informations pour les développeurs
