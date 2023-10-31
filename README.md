@@ -36,6 +36,7 @@ RetroArch has advanced features like shaders, netplay, rewinding, next-frame res
 * Official user documentation: <https://docs.libretro.com/>
 * Official admin documentation: <https://docs.libretro.com/>
 * Upstream app code repository: <https://github.com/libretro/RetroArch>
+* YunoHost Store: <https://apps.yunohost.org/app/retroarch>
 * Report a bug: <https://github.com/YunoHost-Apps/retroarch_ynh/issues>
 
 ## Developer info
