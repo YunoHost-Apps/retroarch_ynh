@@ -1,15 +1,8 @@
 #!/bin/bash
 
-#=================================================
-# GENERIC START
-#=================================================
-# IMPORT GENERIC HELPERS
-#=================================================
-
 #Keep this path for calling _common.sh inside the execution's context of backup and restore scripts
 source ../settings/scripts/_common.sh
 source /usr/share/yunohost/helpers
-
 
 #=================================================
 # STANDARD RESTORATION STEPS
@@ -17,47 +10,47 @@ source /usr/share/yunohost/helpers
 # RESTORE THE NGINX CONFIGURATION
 #=================================================
 
-ynh_restore_file --origin_path="/etc/nginx/conf.d/$domain.d/$app.conf"
+ynh_restore "/etc/nginx/conf.d/$domain.d/$app.conf"
 
 #backup & Update nginx MIME type so wasm mime type is recognized
 
 if [ !$(grep wasm /etc/nginx/mime.types) ]; then
 	ynh_print_info "/etc/nginx/mime.types saved as /etc/nginx/mime.types.$app"
 	cp /etc/nginx/mime.types /etc/nginx/mime.types.$app
-	ynh_replace_string --match_string="    application/octet-stream              bin exe dll;" --replace_string="    application/wasm                      wasm;\n\n    application/octet-stream              bin exe dll;" --target_file="/etc/nginx/mime.types"
-	ynh_store_file_checksum --file="/etc/nginx/mime.types"
+	ynh_replace --match="    application/octet-stream              bin exe dll;" --replace="    application/wasm                      wasm;\n\n    application/octet-stream              bin exe dll;" --file="/etc/nginx/mime.types"
+	ynh_store_file_checksum "/etc/nginx/mime.types"
 fi
 
 #=================================================
 # RESTORE THE APP MAIN DIR
 #=================================================
-ynh_script_progression --message="Restoring the app main directory..." --weight=1
+ynh_script_progression "Restoring the app main directory..."
 
-ynh_restore_file --origin_path="$install_dir"
+ynh_restore "$install_dir"
 
 #=================================================
 # SPECIFIC RESTORATION
 #=================================================
 # REINSTALL DEPENDENCIES
 #=================================================
-ynh_script_progression --message="Reinstalling dependencies..." --weight=5
+ynh_script_progression "Reinstalling dependencies..."
 
 # Define and install dependencies
 #Dependencies are not really required as this is just to unzip the 7z file
 #However, npm IS required to run the coffeescript
-ynh_install_nodejs --nodejs_version=$nodejs_version
-ynh_use_nodejs
-ynh_npm install -g coffeescript
+ynh_nodejs_install
+
+npm install -g coffeescript
 
 #=================================================
 #SETTING MULTIMEDIA DIRECTORY
 #=================================================
-ynh_script_progression --message="Setting up Multimedia directory..." --weight=5
+ynh_script_progression "Setting up Multimedia directory..."
 
 ynh_multimedia_build_main_dir
 mkdir -p $install_dir/assets/cores/Game
 ynh_multimedia_addfolder --source_dir="$install_dir/assets/cores/Game" --dest_dir="/share/Game"
-ynh_add_config --template="../conf/README.GAME" --destination="$install_dir/assets/cores/Game/README"
+ynh_config_add --template="README.GAME" --destination="$install_dir/assets/cores/Game/README"
 chmod 666 $install_dir/assets/cores/Game/README
 
 #=================================================
@@ -65,27 +58,25 @@ chmod 666 $install_dir/assets/cores/Game/README
 #=================================================
 
 # Restore permissions on app files
-chown -R www-data:multimedia $install_dir
-# Requested so that multimedia group can see the Game folder : all parent folder should be readable by others 
-chmod 750 $install_dir
+#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R www-data:multimedia $install_dir
+# Requested so that multimedia group can see the Game folder : all parent folder should be readable by others
 
+#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 750 $install_dir
 #=================================================
 # RESTORE THE CRON FILE
 #=================================================
 
-ynh_restore_file --origin_path="/etc/cron.d/$app"
+ynh_restore "/etc/cron.d/$app"
 
-#=================================================
-# GENERIC FINALIZATION
 #=================================================
 # RELOAD NGINX AND PHP-FPM
 #=================================================
-ynh_script_progression --message="Reloading nginx web server..." --weight=1
+ynh_script_progression "Reloading nginx web server..."
 
-ynh_systemd_action --service_name=nginx --action=reload
+ynh_systemctl --service=nginx --action=reload
 
 #=================================================
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Restoration completed for $app" --last
+ynh_script_progression "Restoration completed for $app"
