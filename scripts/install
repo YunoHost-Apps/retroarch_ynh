@@ -1,35 +1,29 @@
 #!/bin/bash
 
-#=================================================
-# GENERIC START
-#=================================================
-# IMPORT GENERIC HELPERS
-#=================================================
-
 source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
 # INSTALL DEPENDENCIES
 #=================================================
-ynh_script_progression --message="Installing dependencies..." --weight=13
+ynh_script_progression "Installing dependencies..."
 
-ynh_install_nodejs --nodejs_version=$nodejs_version
-ynh_use_nodejs
-ynh_npm install -g coffeescript
+ynh_nodejs_install
+
+npm install -g coffeescript
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-ynh_script_progression --message="Setting up source files..." --weight=60
+ynh_script_progression "Setting up source files..."
 
 # uncompress and patch done manually as 7z format is not supported
 ynh_setup_source --dest_dir="$install_dir"
 #7z archive not handled by ynh and no way to strip component, have to move it manually
 7zr x $install_dir/main -o$install_dir
 mv $install_dir/retroarch/* $install_dir/
-ynh_secure_remove --file="$install_dir/main"
-ynh_secure_remove --file="$install_dir/retroarch"
+ynh_safe_rm "$install_dir/main"
+ynh_safe_rm "$install_dir/retroarch"
 
 touch $install_dir/analytics.js #https://github.com/libretro/RetroArch/issues/4539#issuecomment-473345195
 
@@ -39,54 +33,54 @@ chmod +x $install_dir/indexer
 #=================================================
 #SETTING MULTIMEDIA DIRECTORY
 #=================================================
-ynh_script_progression --message="Setting up Multimedia directory..." --weight=9
+ynh_script_progression "Setting up Multimedia directory..."
 
 ynh_multimedia_build_main_dir
 mkdir -p $install_dir/assets/cores/Game
 ynh_multimedia_addfolder --source_dir="$install_dir/assets/cores/Game" --dest_dir="/share/Game"
-ynh_add_config --template="../conf/README.GAME" --destination="$install_dir/assets/cores/Game/README"
+ynh_config_add --template="README.GAME" --destination="$install_dir/assets/cores/Game/README"
 chmod 666 $install_dir/assets/cores/Game/README
 
 # SETUP CRON FILE FOR INDEXER
 
 #setup indexer bash script
-ynh_add_config --template="../conf/indexer.sh" --destination="$install_dir/indexer.sh"
+ynh_config_add --template="indexer.sh" --destination="$install_dir/indexer.sh"
 chown www-data: $install_dir/indexer.sh
 chmod 744 $install_dir/indexer.sh
 
 #setup cron file
 cron_path="/etc/cron.d/$app"
-ynh_add_config --template="../conf/retroarch.cron" --destination="$cron_path"
-chmod 644 "$cron_path"
+ynh_config_add --template="retroarch.cron" --destination="$cron_path"
+#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 644 "$cron_path"
 
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
-ynh_script_progression --message="Configuring NGINX web server..." --weight=3
+ynh_script_progression "Configuring NGINX web server..."
 
 #backup & Update nginx MIME type so wasm mime type is recognized
 if [ !$(grep wasm /etc/nginx/mime.types) ]; then
 	ynh_print_info "/etc/nginx/mime.types saved as /etc/nginx/mime.types.$app"
 	cp /etc/nginx/mime.types /etc/nginx/mime.types.$app
-	ynh_replace_string --match_string="    application/octet-stream              bin exe dll;" --replace_string="    application/wasm                      wasm;\n\n    application/octet-stream              bin exe dll;" --target_file="/etc/nginx/mime.types"
-	ynh_store_file_checksum --file="/etc/nginx/mime.types"
+	ynh_replace --match="    application/octet-stream              bin exe dll;" --replace="    application/wasm                      wasm;\n\n    application/octet-stream              bin exe dll;" --file="/etc/nginx/mime.types"
+	ynh_store_file_checksum "/etc/nginx/mime.types"
 fi
 
 # Create a dedicated nginx config
-ynh_add_nginx_config
+ynh_config_add_nginx
 
 # Set permissions to app files
-chown -R www-data:multimedia $install_dir
-# Requested so that multimedia group can see the Game folder : all parent folder should be readable by others 
-chmod 750 $install_dir
+#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R www-data:multimedia $install_dir
+# Requested so that multimedia group can see the Game folder : all parent folder should be readable by others
 
+#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 750 $install_dir
 #=================================================
 # SETUP INDEX
 #=================================================
 #indexer use the current directory to run #https://github.com/libretro/RetroArch/tree/master/pkg/emscripten,
 # so we have to cd in it to use it correctly => last step of the install so to not mess with other commands relative path
 #Indexer will list the available ROM and cores for Retroarch
-ynh_script_progression --message="Setup Indexer for content..." --weight=3
+ynh_script_progression "Setup Indexer for content..."
 
 cd $install_dir/assets/frontend/bundle/
 ../../../indexer > .index-xhr
@@ -97,4 +91,4 @@ cd $install_dir/assets/cores
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Installation of $app completed" --last
+ynh_script_progression "Installation of $app completed"
