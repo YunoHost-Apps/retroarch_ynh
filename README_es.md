@@ -5,7 +5,9 @@ No se debe editar a mano.
 
 # Retroarch Web Player para Yunohost
 
-[![Nivel de integración](https://dash.yunohost.org/integration/retroarch.svg)](https://dash.yunohost.org/appci/app/retroarch) ![Estado funcional](https://ci-apps.yunohost.org/ci/badges/retroarch.status.svg) ![Estado En Mantención](https://ci-apps.yunohost.org/ci/badges/retroarch.maintain.svg)
+[![Nivel de integración](https://apps.yunohost.org/badge/integration/retroarch)](https://ci-apps.yunohost.org/ci/apps/retroarch/)
+![Estado funcional](https://apps.yunohost.org/badge/state/retroarch)
+![Estado En Mantención](https://apps.yunohost.org/badge/maintained/retroarch)
 
 [![Instalar Retroarch Web Player con Yunhost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=retroarch)
 
@@ -22,7 +24,7 @@ In addition to this, you are able to run original game discs (CDs) from RetroArc
 RetroArch has advanced features like shaders, netplay, rewinding, next-frame response times, runahead, machine translation, blind accessibility features, and more!
 
 
-**Versión actual:** 1.16.0~ynh1
+**Versión actual:** 1.16.0~ynh2
 
 **Demo:** <https://web.libretro.com/>
 
@@ -41,7 +43,7 @@ RetroArch has advanced features like shaders, netplay, rewinding, next-frame res
 
 ## Información para desarrolladores
 
-Por favor enviar sus correcciones a la [`branch testing`](https://github.com/YunoHost-Apps/retroarch_ynh/tree/testing
+Por favor enviar sus correcciones a la [rama `testing`](https://github.com/YunoHost-Apps/retroarch_ynh/tree/testing).
 
 Para probar la rama `testing`, sigue asÍ:
 
