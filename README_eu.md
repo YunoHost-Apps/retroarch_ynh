@@ -5,7 +5,9 @@ EZ editatu eskuz.
 
 # Retroarch Web Player YunoHost-erako
 
-[![Integrazio maila](https://dash.yunohost.org/integration/retroarch.svg)](https://dash.yunohost.org/appci/app/retroarch) ![Funtzionamendu egoera](https://ci-apps.yunohost.org/ci/badges/retroarch.status.svg) ![Mantentze egoera](https://ci-apps.yunohost.org/ci/badges/retroarch.maintain.svg)
+[![Integrazio maila](https://apps.yunohost.org/badge/integration/retroarch)](https://ci-apps.yunohost.org/ci/apps/retroarch/)
+![Funtzionamendu egoera](https://apps.yunohost.org/badge/state/retroarch)
+![Mantentze egoera](https://apps.yunohost.org/badge/maintained/retroarch)
 
 [![Instalatu Retroarch Web Player YunoHost-ekin](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=retroarch)
 
@@ -22,7 +24,7 @@ In addition to this, you are able to run original game discs (CDs) from RetroArc
 RetroArch has advanced features like shaders, netplay, rewinding, next-frame response times, runahead, machine translation, blind accessibility features, and more!
 
 
-**Paketatutako bertsioa:** 1.16.0~ynh1
+**Paketatutako bertsioa:** 1.16.0~ynh2
 
 **Demoa:** <https://web.libretro.com/>
 
