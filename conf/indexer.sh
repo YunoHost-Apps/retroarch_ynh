@@ -26,4 +26,3 @@ cd $install_dir/assets/frontend/bundle/
 ../../../indexer > .index-xhr
 cd $install_dir/assets/cores
 ../../indexer > .index-xhr
-
