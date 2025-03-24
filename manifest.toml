@@ -47,8 +47,8 @@ ram.runtime = "50M"
     [resources.sources]
 
     [resources.sources.main]
-    url = "https://github.com/libretro/RetroArch/archive/refs/tags/v1.20.0.tar.gz"
-    sha256 = "2f712f632f2e30c78854364633251b22011fec0468432cdc5015e23acf6b1f7e"
+    url = "https://buildbot.libretro.com/stable/1.20.0/emscripten/RetroArch.7z"
+    sha256 = "06ebfa8ab9ad615564bf1396a09aefee3d2871be7843acb0d89a22843009823a"
     format = "whatever"
     in_subdir = true
     extract = false
