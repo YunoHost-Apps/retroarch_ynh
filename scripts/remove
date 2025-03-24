@@ -28,7 +28,6 @@ ynh_script_progression --message="Removing Game folder..." --weight=1
 ynh_secure_remove --file="/home/yunohost.multimedia/share/Game"
 ynh_secure_remove --file="/etc/cron.d/$app"
 
-
 #=================================================
 # REMOVE NGINX CONFIGURATION
 #=================================================

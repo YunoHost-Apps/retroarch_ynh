@@ -44,6 +44,15 @@ then
 	#mv not working as target directory is not empty
 	cp -R $install_dir/retroarch/* $install_dir/
 	ynh_secure_remove --file="$install_dir/main"
+	ynh_secure_remove --file="$install_dir/retroarch"
+
+	pushd "$install_dir/assets/frontend/"
+		cat bundle.zip* > ./bundle.zip
+		ynh_secure_remove --file="./bundle.zip.*"
+		unzip bundle.zip
+		ynh_secure_remove --file="./bundle.zip"
+	popd
+
 	touch $install_dir/analytics.js #https://github.com/libretro/RetroArch/issues/4539#issuecomment-473345195
 	#Get the indexer as exe so that folder w/ ROMs can be indexed
 	chmod +x $install_dir/indexer
