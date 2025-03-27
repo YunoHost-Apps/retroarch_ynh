@@ -35,25 +35,30 @@ fi
 
 if [ "$upgrade_type" == "UPGRADE_APP" ]
 then
-	ynh_script_progression --message="Upgrading source files..." --weight=5
+ynh_script_progression --message="Upgrading source files..." --weight=5
 
 	# Download, check integrity, uncompress and patch the source from app.src
 	ynh_setup_source --dest_dir="$install_dir"
 	#7z archive not handled by ynh and no way to strip component, have to move it manually
 	7zr x $install_dir/main -o$install_dir
 	#mv not working as target directory is not empty
-	cp -R $install_dir/retroarch/* $install_dir/
+	cp -R -f $install_dir/retroarch/* $install_dir/
 	ynh_secure_remove --file="$install_dir/main"
 	ynh_secure_remove --file="$install_dir/retroarch"
-
+	
 	pushd "$install_dir/assets/frontend/"
 		cat bundle.zip* > ./bundle.zip
-		ynh_secure_remove --file="./bundle.zip.*"
 		unzip bundle.zip
-		ynh_secure_remove --file="./bundle.zip"
+		ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip.aa"
+		ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip.ab"
+		ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip.ac"
+		ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip.ad"
+		ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip.ae"
+		ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip"
 	popd
-
+	
 	touch $install_dir/analytics.js #https://github.com/libretro/RetroArch/issues/4539#issuecomment-473345195
+	
 	#Get the indexer as exe so that folder w/ ROMs can be indexed
 	chmod +x $install_dir/indexer
 fi

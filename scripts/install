@@ -33,9 +33,13 @@ ynh_secure_remove --file="$install_dir/retroarch"
 
 pushd "$install_dir/assets/frontend/"
 	cat bundle.zip* > ./bundle.zip
-	ynh_secure_remove --file="./bundle.zip.*"
 	unzip bundle.zip
-	ynh_secure_remove --file="./bundle.zip"
+	ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip.aa"
+	ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip.ab"
+	ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip.ac"
+	ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip.ad"
+	ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip.ae"
+	ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip"
 popd
 
 touch $install_dir/analytics.js #https://github.com/libretro/RetroArch/issues/4539#issuecomment-473345195
