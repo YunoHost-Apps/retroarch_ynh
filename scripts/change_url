@@ -9,7 +9,6 @@
 source _common.sh
 source /usr/share/yunohost/helpers
 
-
 #=================================================
 # STANDARD MODIFICATIONS
 #=================================================
@@ -18,6 +17,5 @@ source /usr/share/yunohost/helpers
 ynh_script_progression --message="Updating NGINX web server configuration..." --weight=1
 
 ynh_change_url_nginx_config
-
 
 ynh_script_progression --message="Change of URL completed for $app" --last

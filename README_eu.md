@@ -24,7 +24,7 @@ In addition to this, you are able to run original game discs (CDs) from RetroArc
 RetroArch has advanced features like shaders, netplay, rewinding, next-frame response times, runahead, machine translation, blind accessibility features, and more!
 
 
-**Paketatutako bertsioa:** 1.16.0~ynh2
+**Paketatutako bertsioa:** 1.20.0~ynh1
 
 **Demoa:** <https://web.libretro.com/>
 
@@ -45,7 +45,7 @@ RetroArch has advanced features like shaders, netplay, rewinding, next-frame res
 
 Bidali `pull request`a [`testing` abarrera](https://github.com/YunoHost-Apps/retroarch_ynh/tree/testing).
 
-`testing` abarra probatzeko, ondorengoa egin:
+`testing` abarra probatzeko, honakoa egin:
 
 ```bash
 sudo yunohost app install https://github.com/YunoHost-Apps/retroarch_ynh/tree/testing --debug

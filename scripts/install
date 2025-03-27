@@ -10,15 +10,6 @@ source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
-# INSTALL DEPENDENCIES
-#=================================================
-ynh_script_progression --message="Installing dependencies..." --weight=13
-
-ynh_install_nodejs --nodejs_version=$nodejs_version
-ynh_use_nodejs
-ynh_npm install -g coffeescript
-
-#=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 ynh_script_progression --message="Setting up source files..." --weight=60
@@ -31,10 +22,31 @@ mv $install_dir/retroarch/* $install_dir/
 ynh_secure_remove --file="$install_dir/main"
 ynh_secure_remove --file="$install_dir/retroarch"
 
+pushd "$install_dir/assets/frontend/"
+	ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip"
+	cat bundle.zip* > ./bundle.zip
+	ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip.aa"
+	ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip.ab"
+	ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip.ac"
+	ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip.ad"
+	ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip.ae"
+	unzip -o bundle.zip
+	ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip"
+popd
+
 touch $install_dir/analytics.js #https://github.com/libretro/RetroArch/issues/4539#issuecomment-473345195
 
 #Get the indexer as exe so that folder w/ ROMs can be indexed
 chmod +x $install_dir/indexer
+
+#=================================================
+# INSTALL DEPENDENCIES
+#=================================================
+ynh_script_progression --message="Installing dependencies..." --weight=13
+
+ynh_install_nodejs --nodejs_version=$nodejs_version
+ynh_use_nodejs
+ynh_npm install -g coffeescript
 
 #=================================================
 #SETTING MULTIMEDIA DIRECTORY
@@ -57,6 +69,7 @@ chmod 744 $install_dir/indexer.sh
 #setup cron file
 cron_path="/etc/cron.d/$app"
 ynh_add_config --template="../conf/retroarch.cron" --destination="$cron_path"
+chown root: "$cron_path"
 chmod 644 "$cron_path"
 
 #=================================================
@@ -65,17 +78,20 @@ chmod 644 "$cron_path"
 ynh_script_progression --message="Configuring NGINX web server..." --weight=3
 
 #backup & Update nginx MIME type so wasm mime type is recognized
-if [ !$(grep wasm /etc/nginx/mime.types) ]; then
+if [[ !$(grep wasm /etc/nginx/mime.types) ]]; then
 	ynh_print_info "/etc/nginx/mime.types saved as /etc/nginx/mime.types.$app"
 	cp /etc/nginx/mime.types /etc/nginx/mime.types.$app
 	ynh_replace_string --match_string="    application/octet-stream              bin exe dll;" --replace_string="    application/wasm                      wasm;\n\n    application/octet-stream              bin exe dll;" --target_file="/etc/nginx/mime.types"
 	ynh_store_file_checksum --file="/etc/nginx/mime.types"
 fi
 
-# Create a dedicated nginx config
+# Create a dedicated NGINX config
 ynh_add_nginx_config
 
-# Set permissions to app files
+#=================================================
+# SET PERMISSIONS ON APP FILES
+#=================================================
+
 chown -R www-data:multimedia $install_dir
 # Requested so that multimedia group can see the Game folder : all parent folder should be readable by others 
 chmod 750 $install_dir
