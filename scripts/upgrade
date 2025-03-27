@@ -10,12 +10,6 @@ source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
-# CHECK VERSION
-#=================================================
-
-upgrade_type=$(ynh_check_app_version_changed)
-
-#=================================================
 # ENSURE DOWNWARD COMPATIBILITY
 #=================================================
 ynh_script_progression --message="Downward Compatibility checks..." --weight=1
@@ -27,72 +21,39 @@ if ynh_compare_current_package_version --comparison lt --version 1.15.0~ynh3; th
 		rm /home/yunohost.multimedia/share/Game #ynh_secure_remove does not remove link
 	fi
 fi
+
 #=================================================
 # STANDARD UPGRADE STEPS
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-
-if [ "$upgrade_type" == "UPGRADE_APP" ]
-then
 ynh_script_progression --message="Upgrading source files..." --weight=5
 
-	# Download, check integrity, uncompress and patch the source from app.src
-	ynh_setup_source --dest_dir="$install_dir"
-	#7z archive not handled by ynh and no way to strip component, have to move it manually
-	7zr x $install_dir/main -o$install_dir
-	#mv not working as target directory is not empty
-	cp -R -f $install_dir/retroarch/* $install_dir/
-	ynh_secure_remove --file="$install_dir/main"
-	ynh_secure_remove --file="$install_dir/retroarch"
-	
-	pushd "$install_dir/assets/frontend/"
-		cat bundle.zip* > ./bundle.zip
-		unzip bundle.zip
-		ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip.aa"
-		ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip.ab"
-		ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip.ac"
-		ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip.ad"
-		ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip.ae"
-		ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip"
-	popd
-	
-	touch $install_dir/analytics.js #https://github.com/libretro/RetroArch/issues/4539#issuecomment-473345195
-	
-	#Get the indexer as exe so that folder w/ ROMs can be indexed
-	chmod +x $install_dir/indexer
-fi
+# Download, check integrity, uncompress and patch the source from app.src
+ynh_setup_source --dest_dir="$install_dir"
+#7z archive not handled by ynh and no way to strip component, have to move it manually
+7zr x $install_dir/main -o$install_dir
+#mv not working as target directory is not empty
+cp -R -f $install_dir/retroarch/* $install_dir/
+ynh_secure_remove --file="$install_dir/main"
+ynh_secure_remove --file="$install_dir/retroarch"
 
-# SETUP CRON FILE FOR INDEXER
+pushd "$install_dir/assets/frontend/"
+	ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip"
+	cat bundle.zip* > ./bundle.zip
+	ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip.aa"
+	ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip.ab"
+	ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip.ac"
+	ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip.ad"
+	ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip.ae"
+	unzip -o bundle.zip
+	ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip"
+popd
 
-#setup indexer bash script
-ynh_add_config --template="../conf/indexer.sh" --destination="$install_dir/indexer.sh"
-chown www-data: $install_dir/indexer.sh
-chmod 744 $install_dir/indexer.sh
-#setup cron file
-cron_path="/etc/cron.d/$app"
-ynh_add_config --template="../conf/retroarch.cron" --destination="$cron_path"
-chown root: "$cron_path"
-chmod 644 "$cron_path"
+touch $install_dir/analytics.js #https://github.com/libretro/RetroArch/issues/4539#issuecomment-473345195
 
-#=================================================
-#SETTING MULTIMEDIA DIRECTORY
-#=================================================
-ynh_script_progression --message="Setting up Multimedia directory..." --weight=4
-
-ynh_multimedia_build_main_dir
-mkdir -p $install_dir/assets/cores/Game
-ynh_multimedia_addfolder --source_dir="$install_dir/assets/cores/Game" --dest_dir="/share/Game"
-ynh_add_config --template="../conf/README.GAME" --destination="$install_dir/assets/cores/Game/README"
-chmod 666 $install_dir/assets/cores/Game/README
-
-#=================================================
-# NGINX CONFIGURATION
-#=================================================
-ynh_script_progression --message="Upgrading NGINX web server configuration..." --weight=1
-
-# Create a dedicated NGINX config
-ynh_add_nginx_config
+#Get the indexer as exe so that folder w/ ROMs can be indexed
+chmod +x $install_dir/indexer
 
 #=================================================
 # UPGRADE DEPENDENCIES
@@ -107,9 +68,39 @@ ynh_use_nodejs
 ynh_npm install -g coffeescript
 
 #=================================================
-# SPECIFIC UPGRADE
+#SETTING MULTIMEDIA DIRECTORY
 #=================================================
-# Set permissions on app files
+ynh_script_progression --message="Setting up Multimedia directory..." --weight=4
+
+ynh_multimedia_build_main_dir
+mkdir -p $install_dir/assets/cores/Game
+ynh_multimedia_addfolder --source_dir="$install_dir/assets/cores/Game" --dest_dir="/share/Game"
+ynh_add_config --template="../conf/README.GAME" --destination="$install_dir/assets/cores/Game/README"
+chmod 666 $install_dir/assets/cores/Game/README
+
+# SETUP CRON FILE FOR INDEXER
+
+#setup indexer bash script
+ynh_add_config --template="../conf/indexer.sh" --destination="$install_dir/indexer.sh"
+chown www-data: $install_dir/indexer.sh
+chmod 744 $install_dir/indexer.sh
+
+#setup cron file
+cron_path="/etc/cron.d/$app"
+ynh_add_config --template="../conf/retroarch.cron" --destination="$cron_path"
+chown root: "$cron_path"
+chmod 644 "$cron_path"
+
+#=================================================
+# NGINX CONFIGURATION
+#=================================================
+ynh_script_progression --message="Upgrading NGINX web server configuration..." --weight=1
+
+# Create a dedicated NGINX config
+ynh_add_nginx_config
+
+#=================================================
+# SET PERMISSIONS ON APP FILES
 #=================================================
 
 chown -R www-data:multimedia $install_dir
