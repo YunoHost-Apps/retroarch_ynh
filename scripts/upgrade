@@ -41,11 +41,6 @@ ynh_secure_remove --file="$install_dir/retroarch"
 pushd "$install_dir/assets/frontend/"
 	ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip"
 	cat bundle.zip* > ./bundle.zip
-	ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip.aa"
-	ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip.ab"
-	ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip.ac"
-	ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip.ad"
-	ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip.ae"
 	unzip -o bundle.zip
 	ynh_secure_remove --file="$install_dir/assets/frontend/bundle.zip"
 popd
@@ -104,7 +99,7 @@ ynh_add_nginx_config
 #=================================================
 
 chown -R www-data:multimedia $install_dir
-# Requested so that multimedia group can see the Game folder : all parent folder should be readable by others 
+# Requested so that multimedia group can see the Game folder : all parent folder should be readable by others
 chmod 750 $install_dir
 
 #=================================================
