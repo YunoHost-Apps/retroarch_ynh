@@ -32,7 +32,7 @@ ynh_script_progression --message="Upgrading source files..." --weight=5
 # Download, check integrity, uncompress and patch the source from app.src
 ynh_setup_source --dest_dir="$install_dir"
 #7z archive not handled by ynh and no way to strip component, have to move it manually
-7zr x $install_dir/main -o$install_dir
+7zr x -y $install_dir/main -o$install_dir
 #mv not working as target directory is not empty
 cp -R -f $install_dir/retroarch/* $install_dir/
 ynh_secure_remove --file="$install_dir/main"
