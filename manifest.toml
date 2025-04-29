@@ -7,7 +7,7 @@ name = "Retroarch Web Player"
 description.en = "Emulate videogames system and play videogames through your web browser"
 description.fr = "Emulez des consoles de jeux et jouer à ces jeux vidéos dans votre explorateur web"
 
-version = "1.20.0~ynh3"
+version = "1.21.1~ynh1"
 
 maintainers = ["Krakinou"]
 
@@ -47,8 +47,8 @@ ram.runtime = "50M"
     [resources.sources]
 
     [resources.sources.main]
-    url = "https://buildbot.libretro.com/stable/1.20.0/emscripten/RetroArch.7z"
-    sha256 = "06ebfa8ab9ad615564bf1396a09aefee3d2871be7843acb0d89a22843009823a"
+    url = "https://github.com/libretro/RetroArch/archive/refs/tags/v1.21.1.tar.gz"
+    sha256 = "add2c0cdcc026311913d3352e281644d495b716dd4a01fcc31eec30831e8713c"
     format = "whatever"
     in_subdir = true
     extract = false
