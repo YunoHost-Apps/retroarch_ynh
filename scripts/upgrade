@@ -18,23 +18,19 @@ fi
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
+ynh_script_progression "Upgrading source files..."
 
-# FIXME: this is still supported but the recommendation is now to *always* re-setup the app sources wether or not the upstream sources changed
-if ynh_app_upstream_version_changed
-then
-	ynh_script_progression "Upgrading source files..."
+# Download, check integrity, uncompress and patch the source from app.src
+ynh_setup_source --dest_dir="$install_dir"
 
-	# Download, check integrity, uncompress and patch the source from app.src
-	ynh_setup_source --dest_dir="$install_dir"
-	#7z archive not handled by ynh and no way to strip component, have to move it manually
-	7zr x $install_dir/main -o$install_dir
-	#mv not working as target directory is not empty
-	cp -R $install_dir/retroarch/* $install_dir/
-	ynh_safe_rm "$install_dir/main"
-	touch $install_dir/analytics.js #https://github.com/libretro/RetroArch/issues/4539#issuecomment-473345195
-	#Get the indexer as exe so that folder w/ ROMs can be indexed
-	chmod +x $install_dir/indexer
-fi
+#7z archive not handled by ynh and no way to strip component, have to move it manually
+7zr x $install_dir/main -o$install_dir
+#mv not working as target directory is not empty
+cp -R $install_dir/retroarch/* $install_dir/
+ynh_safe_rm "$install_dir/main"
+touch $install_dir/analytics.js #https://github.com/libretro/RetroArch/issues/4539#issuecomment-473345195
+#Get the indexer as exe so that folder w/ ROMs can be indexed
+chmod +x $install_dir/indexer
 
 # SETUP CRON FILE FOR INDEXER
 
@@ -45,8 +41,6 @@ chmod 744 $install_dir/indexer.sh
 #setup cron file
 cron_path="/etc/cron.d/$app"
 ynh_config_add --template="retroarch.cron" --destination="$cron_path"
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown root: "$cron_path"
-#REMOVEME? Assuming the file is setup using ynh_config_add, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 644 "$cron_path"
 
 #=================================================
 #SETTING MULTIMEDIA DIRECTORY

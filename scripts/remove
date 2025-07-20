@@ -8,10 +8,10 @@ source /usr/share/yunohost/helpers
 #=================================================
 ynh_script_progression "Removing dependencies..."
 
-# Remove metapackage and its dependencies
-
-npm uninstall -g coffeescript
 ynh_nodejs_remove
+
+# Remove metapackage and its dependencies
+npm uninstall -g coffeescript
 
 #=================================================
 # REMOVE MULTIMEDIA SYMBOLIC LINK
