@@ -52,15 +52,6 @@ ynh_config_add --template="README.GAME" --destination="$install_dir/assets/cores
 chmod 666 $install_dir/assets/cores/Game/README
 
 #=================================================
-# RESTORE USER RIGHTS
-#=================================================
-
-# Restore permissions on app files
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R www-data:multimedia $install_dir
-# Requested so that multimedia group can see the Game folder : all parent folder should be readable by others
-
-#REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod 750 $install_dir
-#=================================================
 # RESTORE THE CRON FILE
 #=================================================
 
