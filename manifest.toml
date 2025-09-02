@@ -20,7 +20,7 @@ userdoc = "https://docs.libretro.com/"
 code = "https://github.com/libretro/RetroArch"
 
 [integration]
-yunohost = ">= 11.1.18"
+yunohost = ">= 12.1.17"
 architectures = "all"
 multi_instance = false
 ldap = "not_relevant"
@@ -64,3 +64,6 @@ ram.runtime = "50M"
 
     [resources.apt]
     packages = "p7zip"
+
+    [resources.nodejs]
+    version = "10"

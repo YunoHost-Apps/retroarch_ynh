@@ -7,7 +7,7 @@
 #=================================================
 
 #Keep this path for calling _common.sh inside the execution's context of backup and restore scripts
-source ../settings/scripts/_common.sh
+
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -44,8 +44,8 @@ ynh_script_progression --message="Reinstalling dependencies..." --weight=5
 # Define and install dependencies
 #Dependencies are not really required as this is just to unzip the 7z file
 #However, npm IS required to run the coffeescript
-ynh_install_nodejs --nodejs_version=$nodejs_version
-ynh_use_nodejs
+#REMOVEME? ynh_install_nodejs --#REMOVEME? nodejs_version=$nodejs_version
+#REMOVEME? ynh_use_nodejs
 ynh_npm install -g coffeescript
 
 #=================================================

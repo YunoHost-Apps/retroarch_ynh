@@ -6,7 +6,7 @@
 # IMPORT GENERIC HELPERS
 #=================================================
 
-source _common.sh
+
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -15,9 +15,9 @@ source /usr/share/yunohost/helpers
 ynh_script_progression --message="Removing dependencies..." --weight=7
 
 # Remove metapackage and its dependencies
-ynh_use_nodejs
+#REMOVEME? ynh_use_nodejs
 ynh_npm uninstall -g coffeescript
-ynh_remove_nodejs
+#REMOVEME? ynh_remove_nodejs
 
 #=================================================
 # REMOVE MULTIMEDIA SYMBOLIC LINK

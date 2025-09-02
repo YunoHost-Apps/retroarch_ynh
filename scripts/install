@@ -6,7 +6,7 @@
 # IMPORT GENERIC HELPERS
 #=================================================
 
-source _common.sh
+
 source /usr/share/yunohost/helpers
 
 #=================================================
@@ -39,8 +39,8 @@ chmod +x $install_dir/indexer
 #=================================================
 ynh_script_progression --message="Installing dependencies..." --weight=13
 
-ynh_install_nodejs --nodejs_version=$nodejs_version
-ynh_use_nodejs
+#REMOVEME? ynh_install_nodejs --#REMOVEME? nodejs_version=$nodejs_version
+#REMOVEME? ynh_use_nodejs
 ynh_npm install -g coffeescript
 
 #=================================================
