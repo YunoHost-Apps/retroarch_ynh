@@ -1,41 +1,33 @@
 #!/bin/bash
 
-#=================================================
-# GENERIC START
-#=================================================
-# IMPORT GENERIC HELPERS
-#=================================================
-
-source _common.sh
 source /usr/share/yunohost/helpers
 
 #=================================================
 # REMOVE DEPENDENCIES
 #=================================================
-ynh_script_progression --message="Removing dependencies..." --weight=7
+ynh_script_progression "Removing dependencies..."
 
 # Remove metapackage and its dependencies
-ynh_use_nodejs
-ynh_npm uninstall -g coffeescript
-ynh_remove_nodejs
+
+npm uninstall -g coffeescript
 
 #=================================================
 # REMOVE MULTIMEDIA SYMBOLIC LINK
 #=================================================
-ynh_script_progression --message="Removing Game folder..." --weight=1
+ynh_script_progression "Removing Game folder..."
 
 # Remove the app directory securely
-ynh_secure_remove --file="/home/yunohost.multimedia/share/Game"
-ynh_secure_remove --file="/etc/cron.d/$app"
+ynh_safe_rm "/home/yunohost.multimedia/share/Game"
+ynh_safe_rm "/etc/cron.d/$app"
 
 #=================================================
 # REMOVE NGINX CONFIGURATION
 #=================================================
-ynh_script_progression --message="Removing NGINX web server configuration..." --weight=1
+ynh_script_progression "Removing NGINX web server configuration..."
 
 # Remove the dedicated nginx config
-ynh_remove_nginx_config
-if [ "$(ynh_app_setting_get --app=$app --key=checksum__etc_nginx_mime.types)" == "$(md5sum "/etc/nginx/mime.types" | cut -d ' ' -f 1)" ]; then
+ynh_config_remove_nginx
+if [ "$(ynh_app_setting_get --key=checksum__etc_nginx_mime.types)" == "$(md5sum "/etc/nginx/mime.types" | cut -d ' ' -f 1)" ]; then
 	#file has not changed, restore the previous mime.type
 	rm /etc/nginx/mime.types
 	mv /etc/nginx/mime.types.$app /etc/nginx/mime.types
@@ -48,4 +40,4 @@ fi
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Removal of $app completed" --last
+ynh_script_progression "Removal of $app completed"
